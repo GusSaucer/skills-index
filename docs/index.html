@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Índice de Skills — Claude Code</title>
+<meta name="description" content="Catálogo buscável das skills do Claude Code: o que cada uma faz e quando dispara.">
+<style>
+  :root {
+    color-scheme: light dark;
+    --bg: #fbfaf9;
+    --surface: #ffffff;
+    --surface-2: #f3f1ee;
+    --border: #e2ded8;
+    --border-strong: #cbc5bc;
+    --text: #1d1b19;
+    --text-dim: #5f5a54;
+    --text-faint: #8a847c;
+    --accent: #b1511c;
+    --accent-soft: #fbeee5;
+    --focus: #1d6fb8;
+    --conta: #2d6a4f;
+    --conta-bg: #e4f1ea;
+    --nativa: #1f5a8f;
+    --nativa-bg: #e3eef8;
+    --local: #7b3f9d;
+    --local-bg: #f0e7f7;
+    --marketplace: #8a6513;
+    --marketplace-bg: #f8f0dc;
+    --radius: 10px;
+    --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1917;
+      --surface: #232220;
+      --surface-2: #2c2a27;
+      --border: #38352f;
+      --border-strong: #4c4842;
+      --text: #f0ede8;
+      --text-dim: #b3ada4;
+      --text-faint: #867f76;
+      --accent: #e8945c;
+      --accent-soft: #33261c;
+      --focus: #6bb0e8;
+      --conta: #7fd0a5;
+      --conta-bg: #1b2f25;
+      --nativa: #87bce8;
+      --nativa-bg: #1a2835;
+      --local: #c79ee0;
+      --local-bg: #291f32;
+      --marketplace: #d9b562;
+      --marketplace-bg: #2e2715;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a1917;
+    --surface: #232220;
+    --surface-2: #2c2a27;
+    --border: #38352f;
+    --border-strong: #4c4842;
+    --text: #f0ede8;
+    --text-dim: #b3ada4;
+    --text-faint: #867f76;
+    --accent: #e8945c;
+    --accent-soft: #33261c;
+    --focus: #6bb0e8;
+    --conta: #7fd0a5;
+    --conta-bg: #1b2f25;
+    --nativa: #87bce8;
+    --nativa-bg: #1a2835;
+    --local: #c79ee0;
+    --local-bg: #291f32;
+    --marketplace: #d9b562;
+    --marketplace-bg: #2e2715;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 0 16px 72px; }
+
+  header { padding: 48px 0 28px; border-bottom: 1px solid var(--border); }
+  h1 { margin: 0 0 10px; font-size: clamp(1.7rem, 4.6vw, 2.4rem); line-height: 1.15; letter-spacing: -0.02em; }
+  .lead { margin: 0 0 18px; max-width: 64ch; color: var(--text-dim); font-size: 1.02rem; }
+  .lead strong { color: var(--text); font-weight: 600; }
+  .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 0.82rem; color: var(--text-faint); }
+
+  .controls { position: sticky; top: 0; z-index: 5; padding: 14px 0; margin-bottom: 4px; background: var(--bg); border-bottom: 1px solid var(--border); }
+  .search-row { display: flex; gap: 10px; align-items: center; }
+  input[type="search"] {
+    flex: 1; min-width: 0;
+    padding: 10px 13px;
+    font: inherit; font-size: 0.95rem;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    appearance: none;
+  }
+  input[type="search"]::placeholder { color: var(--text-faint); }
+  input[type="search"]:focus-visible, button:focus-visible {
+    outline: 2px solid var(--focus); outline-offset: 2px;
+  }
+  .theme-btn {
+    flex: none; width: 40px; height: 40px;
+    display: grid; place-items: center;
+    font-size: 1.05rem; line-height: 1;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+  .filters { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+  .chip {
+    padding: 5px 11px;
+    font: inherit; font-size: 0.82rem; font-weight: 500;
+    color: var(--text-dim);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .chip:hover { border-color: var(--border-strong); color: var(--text); }
+  .chip[aria-pressed="true"] { color: var(--text); background: var(--accent-soft); border-color: var(--accent); }
+  .chip .n { color: var(--text-faint); font-variant-numeric: tabular-nums; }
+  .chip[aria-pressed="true"] .n { color: var(--accent); }
+
+  .tally { padding: 18px 0 6px; font-size: 0.85rem; color: var(--text-faint); font-variant-numeric: tabular-nums; }
+
+  .group { margin-top: 26px; }
+  .group h2 {
+    margin: 0 0 12px;
+    font-size: 0.78rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--text-faint);
+  }
+  .cards { display: grid; gap: 10px; }
+  .card {
+    padding: 15px 17px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .card-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 10px; margin-bottom: 7px; }
+  .name { font-family: var(--mono); font-size: 0.95rem; font-weight: 600; letter-spacing: -0.01em; }
+  .badge {
+    padding: 2px 8px;
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;
+    border-radius: 999px;
+  }
+  .badge.conta { color: var(--conta); background: var(--conta-bg); }
+  .badge.nativa { color: var(--nativa); background: var(--nativa-bg); }
+  .badge.local { color: var(--local); background: var(--local-bg); }
+  .badge.marketplace { color: var(--marketplace); background: var(--marketplace-bg); }
+  .plugin { font-family: var(--mono); font-size: 0.76rem; color: var(--text-faint); }
+  .desc { margin: 0; color: var(--text); font-size: 0.93rem; }
+  .when { margin: 7px 0 0; padding-left: 11px; border-left: 2px solid var(--border-strong); color: var(--text-dim); font-size: 0.87rem; }
+  .when b { font-weight: 600; color: var(--text-faint); }
+  mark { padding: 0 1px; color: inherit; background: var(--accent-soft); border-radius: 2px; box-shadow: inset 0 -1px 0 var(--accent); }
+
+  .empty { padding: 48px 0; text-align: center; color: var(--text-faint); }
+
+  footer { margin-top: 48px; padding-top: 20px; border-top: 1px solid var(--border); font-size: 0.82rem; color: var(--text-faint); }
+  footer p { margin: 0 0 7px; max-width: 70ch; }
+  code { font-family: var(--mono); font-size: 0.88em; padding: 1px 4px; background: var(--surface-2); border-radius: 4px; }
+
+  @media (max-width: 560px) {
+    header { padding: 32px 0 22px; }
+    .card { padding: 13px 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Índice de Skills — Claude Code</h1>
+  <p class="lead">Uma skill é uma pasta com um <code>SKILL.md</code> que o Claude carrega sob demanda. Este é o catálogo de um setup real: <strong>35 skills ativas</strong> mais <strong>33 em plugins do marketplace</strong>, com o que cada uma faz e quando dispara.</p>
+  <div class="meta">
+    <span>Levantado em 22/10/2026</span>
+    <span>Busca por nome, descrição ou gatilho</span>
+  </div>
+</header>
+
+<div class="controls">
+  <div class="search-row">
+    <input type="search" id="q" placeholder="Buscar: planilha, PR, gráfico, agendar…" autocomplete="off" aria-label="Buscar skills">
+    <button class="theme-btn" id="theme" type="button" aria-label="Alternar tema claro e escuro" title="Alternar tema">◐</button>
+  </div>
+  <div class="filters" id="filtros" role="group" aria-label="Filtrar por origem"></div>
+</div>
+
+<p class="tally" id="tally" role="status" aria-live="polite"></p>
+<main id="lista"></main>
+
+<footer>
+  <p>As descrições vêm dos campos <code>name</code> e <code>description</code> dos <code>SKILL.md</code> instalados e do catálogo do marketplace oficial <code>anthropics/claude-plugins-official</code>, levantados em 22/10/2026.</p>
+  <p>Nomes e comportamentos de skill mudam entre versões do Claude Code. Confira com <code>/plugin</code> e com a lista da sua própria sessão antes de considerar este índice atual.</p>
+</footer>
+
+</div>
+
+<!-- DADOS:INICIO -->
+<script type="application/json" id="dados">
+{"skills":[{"nome":"docs","origem":"conta","plugin":null,"comando":null,"grupo":"Documentos e arquivos","descricao":"Cria e edita docs vivos, com comentário e exportação para Word, PDF ou Markdown.","quando":"Qualquer documento para guardar, compartilhar ou assinar — relatório, proposta, contrato, currículo."},{"nome":"docx","origem":"conta","plugin":null,"comando":null,"grupo":"Documentos e arquivos","descricao":"Lê, cria e edita arquivos Word, inclusive controle de alterações e templates .dotx.","quando":"O formato .docx for exigido por nome."},{"nome":"xlsx","origem":"conta","plugin":null,"comando":null,"grupo":"Documentos e arquivos","descricao":"Abre, corrige e gera planilhas .xlsx, .csv e .tsv, com fórmulas e gráficos.","quando":"O entregável for uma planilha, ou houver dado tabular sujo para limpar."},{"nome":"pptx","origem":"conta","plugin":null,"comando":null,"grupo":"Documentos e arquivos","descricao":"Lê e monta apresentações PowerPoint, com layouts, notas do apresentador e comentários.","quando":"Pedirem .pptx por nome."},{"nome":"pdf","origem":"conta","plugin":null,"comando":null,"grupo":"Documentos e arquivos","descricao":"Extrai texto e tabelas, junta, divide, rotaciona, preenche formulário, criptografa e faz OCR.","quando":"Qualquer tarefa com PDF."},{"nome":"google-workspace","origem":"conta","plugin":null,"comando":null,"grupo":"Documentos e arquivos","descricao":"Cria e altera Google Docs, Sheets e Slides, e mexe em arquivos do Drive.","quando":"O pedido citar Google, ou vier um link docs.google.com."},{"nome":"deep-research","origem":"conta","plugin":null,"comando":null,"grupo":"Pesquisa","descricao":"Coordena subagentes de pesquisa e entrega um relatório narrativo com fontes.","quando":"Comparar opções, revisar literatura, entender um mercado ou uma tendência."},{"nome":"built-in-browser","origem":"conta","plugin":null,"comando":null,"grupo":"Navegador e computador","descricao":"Regras do navegador embutido no app: abas, login persistente, leitura de página como texto, aprovação de site.","quando":"Antes do primeiro passo no navegador do próprio Claude."},{"nome":"chrome-browser","origem":"conta","plugin":null,"comando":null,"grupo":"Navegador e computador","descricao":"Regras da extensão Claude in Chrome, que age no Chrome real com os seus logins.","quando":"Antes do primeiro passo no seu Chrome."},{"nome":"computer-use","origem":"conta","plugin":null,"comando":null,"grupo":"Navegador e computador","descricao":"Regras do controle de desktop: print de tela, clique, digitação e rolagem em apps locais.","quando":"Mexer em um app do computador, ou olhar a tela."},{"nome":"morning","origem":"conta","plugin":null,"comando":"/morning","grupo":"Rotina","descricao":"Monta o briefing matinal como página HTML, ou agenda como tarefa recorrente de dia de semana.","quando":"Pedir ou configurar o briefing. Pergunta solta sobre a agenda não dispara."},{"nome":"import-memory","origem":"conta","plugin":null,"comando":null,"grupo":"Rotina","descricao":"Importa um export de memória de outro assistente de IA para a memória do Claude, de forma aditiva.","quando":"Migrar de outra ferramenta de IA."},{"nome":"skill-creator","origem":"conta","plugin":null,"comando":"/skill-creator","grupo":"Criar skills","descricao":"Cria, edita e mede skills: roda testes de disparo, analisa variância e otimiza a descrição.","quando":"Escrever a sua própria skill — o caminho mais curto para começar."},{"nome":"reverse-engineer-anything","origem":"local","plugin":null,"comando":null,"grupo":"Engenharia reversa","descricao":"Engenharia reversa com o REA: binário nativo, código gerenciado, Electron/JavaScript, pacote, firmware e navegador. Descompila, compara versões e explica feature a partir de evidência do artefato distribuído. Traz seis arquivos de referência e expõe cerca de 170 ferramentas via MCP.","quando":"A afirmação depende de um binário distribuído, de descompilação ou de evidência de runtime. NÃO para análise de repositório com código-fonte completo."},{"nome":"code-review","origem":"nativa","plugin":null,"comando":"/code-review","grupo":"Código e revisão","descricao":"Revisa o diff atual, um PR, branch ou caminho, procurando bugs de corretude. Níveis low a max; ultra roda revisão multiagente na nuvem.","quando":"Antes de abrir ou de aprovar um PR."},{"nome":"simplify","origem":"nativa","plugin":null,"comando":"/simplify","grupo":"Código e revisão","descricao":"Revisa o código alterado procurando reuso, simplificação e eficiência, e aplica as correções. Qualidade só — não caça bugs.","quando":"Terminou de implementar e quer limpar."},{"nome":"security-review","origem":"nativa","plugin":null,"comando":"/security-review","grupo":"Código e revisão","descricao":"Revisão de segurança das alterações pendentes na branch atual.","quando":"Mexeu em autenticação, permissão ou entrada de usuário."},{"nome":"init","origem":"nativa","plugin":null,"comando":"/init","grupo":"Código e revisão","descricao":"Gera um CLAUDE.md inicial documentando o repositório.","quando":"Abrir um projeto no Claude Code pela primeira vez."},{"nome":"run","origem":"nativa","plugin":null,"comando":null,"grupo":"Código e revisão","descricao":"Sobe e opera o app do projeto para ver a mudança funcionando de verdade, com padrões por tipo de projeto (CLI, servidor, TUI, Electron, biblioteca).","quando":"Quer prova visual, não só teste passando."},{"nome":"dataviz","origem":"nativa","plugin":null,"comando":null,"grupo":"Visual e Artifacts","descricao":"Método de design para qualquer gráfico, painel ou KPI: heurística de forma, fórmula de cor com validador, especificação de marca e regras de interação.","quando":"Antes da primeira linha de código de gráfico, em qualquer biblioteca ou formato."},{"nome":"artifact-design","origem":"nativa","plugin":null,"comando":null,"grupo":"Visual e Artifacts","descricao":"Fundamentos de design de Artifacts: título, tema claro e escuro, layout, bibliotecas permitidas e limites de tamanho.","quando":"Antes de escrever qualquer página de Artifact."},{"nome":"artifact-diagramming","origem":"nativa","plugin":null,"comando":null,"grupo":"Visual e Artifacts","descricao":"Como decidir que um desenho se paga, e desenhá-lo em SVG legível nos dois temas, mostrando o mecanismo real.","quando":"A página precisa de um desenho que explique algo."},{"nome":"artifact-capabilities","origem":"nativa","plugin":null,"comando":null,"grupo":"Visual e Artifacts","descricao":"Capacidades de runtime de um Artifact publicado: ler dados ao vivo, guardar estado compartilhado, saber quem está vendo, arquivos, câmera e microfone.","quando":"A página precisa lembrar o que as pessoas fizeram nela."},{"nome":"update-config","origem":"nativa","plugin":null,"comando":null,"grupo":"Configurar o Claude Code","descricao":"Configura o settings.json: hooks, permissões e variáveis de ambiente.","quando":"Quer automação do tipo \"sempre que X, faça Y\" — isso exige hook, não memória."},{"nome":"keybindings-help","origem":"nativa","plugin":null,"comando":null,"grupo":"Configurar o Claude Code","descricao":"Personaliza atalhos de teclado em ~/.claude/keybindings.json, inclusive atalho em acorde.","quando":"Remapear teclas."},{"nome":"fewer-permission-prompts","origem":"nativa","plugin":null,"comando":null,"grupo":"Configurar o Claude Code","descricao":"Varre seus transcripts procurando chamadas de leitura repetidas e monta uma allowlist priorizada no settings.json do projeto.","quando":"Está cansado de aprovar o mesmo comando."},{"nome":"plugin-authoring","origem":"nativa","plugin":null,"comando":null,"grupo":"Configurar o Claude Code","descricao":"Cria, altera e depura um mod: painel lateral, status line, toast, slash command, hook em chamada de ferramenta.","quando":"Quer mudar a própria interface ou o comportamento do Claude."},{"nome":"workflow-authoring","origem":"nativa","plugin":null,"comando":null,"grupo":"Configurar o Claude Code","descricao":"Referência para escrever um script da ferramenta Workflow: API, retomada, padrões de qualidade e exemplos.","quando":"Vai orquestrar vários subagentes de forma determinística."},{"nome":"loop","origem":"nativa","plugin":null,"comando":"/loop","grupo":"Automação","descricao":"Roda um prompt ou slash command em intervalo recorrente, ou com ritmo decidido pelo modelo.","quando":"\"Checa o deploy a cada 5 minutos\", \"segue rodando isso\"."},{"nome":"schedule","origem":"nativa","plugin":null,"comando":"/schedule","grupo":"Automação","descricao":"Cria, atualiza e lista agentes de nuvem que rodam em cron, ou uma execução única agendada.","quando":"Quer uma rotina que roda sem você estar presente."},{"nome":"schedule (app)","origem":"nativa","plugin":null,"comando":null,"grupo":"Automação","descricao":"Cria ou atualiza tarefa agendada do próprio app. Variante da anterior, dentro do app em vez da nuvem.","quando":"\"Todo dia de manhã\", \"me lembra em uma hora\"."},{"nome":"claude-api","origem":"nativa","plugin":null,"comando":null,"grupo":"Referência","descricao":"Referência da API da Anthropic: IDs de modelo, preços, parâmetros, streaming, tool use, MCP, cache e contagem de tokens.","quando":"Qualquer pergunta sobre modelo, preço ou limite — nunca responder de memória."},{"nome":"consolidate-memory","origem":"nativa","plugin":null,"comando":null,"grupo":"Sessão e memória","descricao":"Passa pelos arquivos de memória: funde duplicatas, corrige fato velho, poda o índice.","quando":"A memória cresceu e começou a conflitar."},{"nome":"explain-usage","origem":"nativa","plugin":null,"comando":null,"grupo":"Sessão e memória","descricao":"Explica para onde foram os tokens da sessão, com um gráfico simples e linguagem direta.","quando":"\"Por que essa sessão custou tanto?\""},{"nome":"setup-claude","origem":"nativa","plugin":null,"comando":null,"grupo":"Sessão e memória","descricao":"Setup guiado: instala plugins conforme o seu papel, conecta as suas ferramentas e testa uma skill.","quando":"Primeiro dia de alguém no Claude Code."},{"nome":"plugin-structure","origem":"marketplace","plugin":"plugin-dev","comando":null,"grupo":"Criar plugins","descricao":"Layout de pasta, manifesto plugin.json, organização de componentes e auto-descoberta.","quando":"Montar a casca de um plugin novo."},{"nome":"command-development","origem":"marketplace","plugin":"plugin-dev","comando":null,"grupo":"Criar plugins","descricao":"Slash commands: frontmatter YAML, argumentos dinâmicos, execução de bash, interação com o usuário.","quando":"Criar um comando de barra próprio."},{"nome":"agent-development","origem":"marketplace","plugin":"plugin-dev","comando":null,"grupo":"Criar plugins","descricao":"Subagentes: frontmatter, prompt de sistema, condições de disparo, ferramentas e cores.","quando":"Criar um subagente autônomo."},{"nome":"skill-development","origem":"marketplace","plugin":"plugin-dev","comando":null,"grupo":"Criar plugins","descricao":"Estrutura de skill, divulgação progressiva e boas práticas de descrição.","quando":"Escrever skill dentro de um plugin."},{"nome":"hook-development","origem":"marketplace","plugin":"plugin-dev","comando":null,"grupo":"Criar plugins","descricao":"Hooks de PreToolUse, PostToolUse, Stop, SessionStart e os demais eventos, inclusive a API de hooks por prompt.","quando":"Validar ou bloquear uso de ferramenta, automação por evento."},{"nome":"mcp-integration","origem":"marketplace","plugin":"plugin-dev","comando":null,"grupo":"Criar plugins","descricao":"Integra servidor MCP num plugin: .mcp.json e tipos de transporte (SSE, stdio, HTTP, WebSocket).","quando":"O plugin precisa conectar um serviço externo."},{"nome":"plugin-settings","origem":"marketplace","plugin":"plugin-dev","comando":null,"grupo":"Criar plugins","descricao":"Padrão .claude/<plugin>.local.md para guardar configuração do plugin por projeto.","quando":"Deixar o comportamento do plugin configurável."},{"nome":"build-mcp-server","origem":"marketplace","plugin":"mcp-server-dev","comando":null,"grupo":"Criar MCP","descricao":"Porta de entrada do desenvolvimento MCP: apura o caso de uso, escolhe o modelo de deploy (HTTP remoto, MCPB, stdio local) e o padrão de ferramentas.","quando":"\"Quero expor minha API para o Claude\"."},{"nome":"build-mcp-app","origem":"marketplace","plugin":"mcp-server-dev","comando":null,"grupo":"Criar MCP","descricao":"Adiciona UI interativa ao servidor MCP: formulário, seletor, painel e diálogo de confirmação dentro da conversa.","quando":"A ferramenta precisa de widget, não só de texto."},{"nome":"build-mcpb","origem":"marketplace","plugin":"mcp-server-dev","comando":null,"grupo":"Criar MCP","descricao":"Empacota o servidor como .mcpb, com runtime Node ou Python embutido, instalável sem o usuário ter nada configurado.","quando":"Distribuir servidor MCP local."},{"nome":"claude-security","origem":"marketplace","plugin":"claude-security","comando":null,"grupo":"Qualidade de código","descricao":"Varre o repositório, o diff da branch ou um PR procurando falha de segurança, e gera patches verificados por um painel de agentes.","quando":"Auditoria de segurança mais fundo que o /security-review nativo."},{"nome":"claude-automation-recommender","origem":"marketplace","plugin":"claude-code-setup","comando":null,"grupo":"Qualidade de código","descricao":"Analisa o código e recomenda que hooks, subagentes, skills, plugins e MCPs valem a pena naquele projeto.","quando":"Primeiro setup do Claude Code num repositório."},{"nome":"claude-md-improver","origem":"marketplace","plugin":"claude-md-management","comando":null,"grupo":"Qualidade de código","descricao":"Audita todos os CLAUDE.md do repositório, pontua contra templates e aplica correções dirigidas.","quando":"Manutenção da memória de projeto."},{"nome":"writing-hookify-rules","origem":"marketplace","plugin":"hookify","comando":null,"grupo":"Qualidade de código","descricao":"Sintaxe e padrões para escrever regra de hook.","quando":"Criar ou configurar regra do hookify."},{"nome":"frontend-design","origem":"marketplace","plugin":"frontend-design","comando":null,"grupo":"Visual","descricao":"Direção estética para UI nova ou reformada: tipografia, hierarquia visual, escolhas que não parecem template.","quando":"A interface precisa ter cara própria."},{"nome":"playground","origem":"marketplace","plugin":"playground","comando":null,"grupo":"Visual","descricao":"Gera playground HTML autocontido: controles visuais, preview ao vivo e um prompt para copiar.","quando":"Quer um explorador interativo de um assunto."},{"nome":"project-artifact","origem":"marketplace","plugin":"project-artifact","comando":null,"grupo":"Relatórios","descricao":"Publica página de status do projeto com abas (visão geral, workstreams, próximos passos, riscos, decisões) e atualiza a mesma URL reportando só o delta.","quando":"O trabalho tem várias frentes e você quer um panorama compartilhável."},{"nome":"receipts","origem":"marketplace","plugin":"receipts","comando":"/receipts","grupo":"Relatórios","descricao":"Monta relatório de uso e impacto a partir dos transcripts locais, cruzando com o histórico do git.","quando":"Justificar o gasto para um gestor, ou revisão própria."},{"nome":"session-report","origem":"marketplace","plugin":"session-report","comando":null,"grupo":"Relatórios","descricao":"Relatório HTML explorável do uso da sessão: tokens, cache, subagentes, skills e prompts caros.","quando":"Entender onde o custo da sessão foi."},{"nome":"skill-creator","origem":"marketplace","plugin":"skill-creator","comando":null,"grupo":"Criar skills","descricao":"Mesma skill que já está ativa na conta: criar, editar e medir skills.","quando":"Redundante se a skill da conta já está ligada."},{"nome":"solo","origem":"marketplace","plugin":"math-proof","comando":"/math-proof:solo","grupo":"Matemática","descricao":"Ataca um problema de matemática difícil sozinho, raciocinando em estágios e gravando cada passo num arquivo de notas, e termina num proof.md autocontido.","quando":"Um problema duro, sem orçamento para subagentes."},{"nome":"siege","origem":"marketplace","plugin":"math-proof","comando":"/math-proof:siege","grupo":"Matemática","descricao":"Mesmo problema, em rodadas: um juiz escreve perguntas, trabalhadores independentes respondem, e o juiz mantém um livro do que está provado, refutado e aberto. Leva horas e dezenas de execuções.","quando":"Vale pagar muito compute por uma prova."},{"nome":"math-olympiad","origem":"marketplace","plugin":"math-olympiad","comando":null,"grupo":"Matemática","descricao":"Problemas de olimpíada de matemática. O SKILL.md do catálogo vem com a descrição vazia.","quando":"Treino de olimpíada."},{"nome":"m5-onboard","origem":"marketplace","plugin":"cwc-makers","comando":null,"grupo":"Hardware","descricao":"Onboarding de ponta a ponta de uma placa M5Stack ESP32 (Cardputer, Core, CoreS3, Stick): detecta no USB, grava firmware UIFlow 2.0 e instala o bundle MicroPython.","quando":"Acabou de plugar a placa."},{"nome":"cardputer-buddy","origem":"marketplace","plugin":"cwc-makers","comando":null,"grupo":"Hardware","descricao":"Itera no bundle MicroPython do Cardputer-Adv depois do provisionamento: adiciona app, envia um .py alterado sem regravar, acompanha o log serial, roda comando no REPL.","quando":"Depois do m5-onboard."},{"nome":"configure (telegram)","origem":"marketplace","plugin":"telegram","comando":null,"grupo":"Canais de mensagem","descricao":"Configura o canal do Telegram: salva o token do bot e revisa a política de acesso.","quando":"Ligar o Claude a um bot do Telegram."},{"nome":"access (telegram)","origem":"marketplace","plugin":"telegram","comando":null,"grupo":"Canais de mensagem","descricao":"Gerencia quem pode falar pelo Telegram: aprova pareamento, edita allowlist, define política de DM e de grupo.","quando":"Controlar o acesso ao canal."},{"nome":"configure (discord)","origem":"marketplace","plugin":"discord","comando":null,"grupo":"Canais de mensagem","descricao":"Configura o canal do Discord: salva o token do bot e revisa a política de acesso.","quando":"Ligar o Claude a um bot do Discord."},{"nome":"access (discord)","origem":"marketplace","plugin":"discord","comando":null,"grupo":"Canais de mensagem","descricao":"Gerencia quem pode falar pelo Discord: aprova pareamento, edita allowlist, define política de DM e de grupo.","quando":"Controlar o acesso ao canal."},{"nome":"configure (imessage)","origem":"marketplace","plugin":"imessage","comando":null,"grupo":"Canais de mensagem","descricao":"Verifica o setup do canal do iMessage e revisa a política de acesso.","quando":"Descobrir por que as mensagens não chegam."},{"nome":"access (imessage)","origem":"marketplace","plugin":"imessage","comando":null,"grupo":"Canais de mensagem","descricao":"Gerencia quem pode falar pelo iMessage: aprova pareamento, edita allowlist, define política de DM e de grupo.","quando":"Controlar o acesso ao canal."},{"nome":"example-skill","origem":"marketplace","plugin":"example-plugin","comando":null,"grupo":"Exemplos","descricao":"Template de referência para criar skill de plugin. Mostra o layout skills/<nome>/SKILL.md.","quando":"Ver o formato antes de escrever a sua."},{"nome":"example-command","origem":"marketplace","plugin":"example-plugin","comando":null,"grupo":"Exemplos","descricao":"Exemplo de skill invocada pelo usuário, demonstrando as opções de frontmatter.","quando":"Ver o formato de uma skill com barra."}]}
+</script>
+<!-- DADOS:FIM -->
+
+<script>
+(function () {
+  "use strict";
+
+  var ORIGENS = [
+    { id: "conta", rotulo: "Conta Anthropic" },
+    { id: "nativa", rotulo: "Nativas do Claude Code" },
+    { id: "local", rotulo: "Instaladas na máquina" },
+    { id: "marketplace", rotulo: "Marketplace" }
+  ];
+
+  var dados;
+  try {
+    dados = JSON.parse(document.getElementById("dados").textContent);
+  } catch (e) {
+    dados = { skills: [] };
+  }
+  var skills = (dados && dados.skills) || [];
+
+  var elQ = document.getElementById("q");
+  var elFiltros = document.getElementById("filtros");
+  var elLista = document.getElementById("lista");
+  var elTally = document.getElementById("tally");
+
+  // --- tema -----------------------------------------------------------------
+  var elTema = document.getElementById("theme");
+  try {
+    var salvo = localStorage.getItem("tema");
+    if (salvo === "light" || salvo === "dark") {
+      document.documentElement.setAttribute("data-theme", salvo);
+    }
+  } catch (e) { /* storage bloqueado: segue no tema do sistema */ }
+
+  elTema.addEventListener("click", function () {
+    var atual = document.documentElement.getAttribute("data-theme");
+    var escuroAgora = atual
+      ? atual === "dark"
+      : window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var novo = escuroAgora ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", novo);
+    try { localStorage.setItem("tema", novo); } catch (e) { /* ignora */ }
+  });
+
+  // --- filtros --------------------------------------------------------------
+  var ativos = new Set();
+
+  ORIGENS.forEach(function (o) {
+    var n = skills.filter(function (s) { return s.origem === o.id; }).length;
+    if (!n) return;
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "chip";
+    b.setAttribute("aria-pressed", "false");
+    b.dataset.origem = o.id;
+    b.innerHTML = escapar(o.rotulo) + ' <span class="n">' + n + "</span>";
+    b.addEventListener("click", function () {
+      if (ativos.has(o.id)) { ativos.delete(o.id); } else { ativos.add(o.id); }
+      b.setAttribute("aria-pressed", ativos.has(o.id) ? "true" : "false");
+      render();
+    });
+    elFiltros.appendChild(b);
+  });
+
+  // --- busca ----------------------------------------------------------------
+  function normalizar(t) {
+    return String(t == null ? "" : t)
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[̀-ͯ]/g, "");
+  }
+
+  function escapar(t) {
+    return String(t == null ? "" : t).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  // Destaca os termos no texto já escapado, comparando sem acento.
+  function realcar(texto, termos) {
+    var esc = escapar(texto);
+    if (!termos.length) return esc;
+    var alvo = normalizar(esc);
+    var faixas = [];
+    termos.forEach(function (t) {
+      var de = alvo.indexOf(t);
+      while (de !== -1) {
+        faixas.push([de, de + t.length]);
+        de = alvo.indexOf(t, de + t.length);
+      }
+    });
+    if (!faixas.length) return esc;
+    faixas.sort(function (a, b) { return a[0] - b[0]; });
+    var fundidas = [faixas[0]];
+    for (var i = 1; i < faixas.length; i++) {
+      var ult = fundidas[fundidas.length - 1];
+      if (faixas[i][0] <= ult[1]) {
+        ult[1] = Math.max(ult[1], faixas[i][1]);
+      } else {
+        fundidas.push(faixas[i]);
+      }
+    }
+    var out = "";
+    var pos = 0;
+    fundidas.forEach(function (f) {
+      out += esc.slice(pos, f[0]) + "<mark>" + esc.slice(f[0], f[1]) + "</mark>";
+      pos = f[1];
+    });
+    return out + esc.slice(pos);
+  }
+
+  skills.forEach(function (s) {
+    s._busca = normalizar(
+      [s.nome, s.plugin, s.comando, s.grupo, s.descricao, s.quando].join(" ")
+    );
+  });
+
+  // --- render ---------------------------------------------------------------
+  function render() {
+    var termos = normalizar(elQ.value).split(/\s+/).filter(Boolean);
+
+    var visiveis = skills.filter(function (s) {
+      if (ativos.size && !ativos.has(s.origem)) return false;
+      return termos.every(function (t) { return s._busca.indexOf(t) !== -1; });
+    });
+
+    elTally.textContent = visiveis.length === skills.length
+      ? skills.length + " skills"
+      : visiveis.length + " de " + skills.length + " skills";
+
+    if (!visiveis.length) {
+      elLista.innerHTML = '<p class="empty">Nenhuma skill casa com essa busca.</p>';
+      return;
+    }
+
+    var ordem = [];
+    var porGrupo = new Map();
+    visiveis.forEach(function (s) {
+      if (!porGrupo.has(s.grupo)) { porGrupo.set(s.grupo, []); ordem.push(s.grupo); }
+      porGrupo.get(s.grupo).push(s);
+    });
+
+    var html = ordem.map(function (g) {
+      var cartoes = porGrupo.get(g).map(function (s) {
+        var origem = ORIGENS.filter(function (o) { return o.id === s.origem; })[0];
+        var titulo = s.comando || s.nome;
+        var partes = [
+          '<div class="card-top">',
+          '<span class="name">' + realcar(titulo, termos) + "</span>",
+          '<span class="badge ' + escapar(s.origem) + '">' + escapar(origem ? origem.rotulo : s.origem) + "</span>"
+        ];
+        if (s.plugin) {
+          partes.push('<span class="plugin">plugin ' + realcar(s.plugin, termos) + "</span>");
+        }
+        partes.push("</div>");
+        partes.push('<p class="desc">' + realcar(s.descricao, termos) + "</p>");
+        if (s.quando) {
+          partes.push('<p class="when"><b>Use quando:</b> ' + realcar(s.quando, termos) + "</p>");
+        }
+        return '<article class="card">' + partes.join("") + "</article>";
+      }).join("");
+      return '<section class="group"><h2>' + escapar(g) + "</h2>" +
+             '<div class="cards">' + cartoes + "</div></section>";
+    }).join("");
+
+    elLista.innerHTML = html;
+  }
+
+  elQ.addEventListener("input", render);
+  render();
+})();
+</script>
+</body>
+</html>
