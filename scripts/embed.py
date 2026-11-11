@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 """Injeta docs/skills.json e docs/agentes.json dentro de docs/index.html.
 
+O skills.json traz tambem as trilhas da curadoria, que vao juntas.
+
 A pagina nao faz fetch dos JSON de proposito: um fetch falharia ao abrir o
 index.html como arquivo local, porque o navegador bloqueia requisicao em
 file://. Os dados ficam embutidos entre dois marcadores no HTML, e este
@@ -23,12 +25,14 @@ HTML_PATH = DOCS / "index.html"
 INICIO = "<!-- DADOS:INICIO -->"
 FIM = "<!-- DADOS:FIM -->"
 
+NIVEIS_VALIDOS = {"iniciante", "intermediario", "avancado"}
+
 # arquivo -> (chave da lista, campos obrigatorios, origens validas, usos validos)
 FONTES = {
     "skills.json": (
         "skills",
         ("nome", "origem", "plugin", "comando", "grupo", "descricao", "quando"),
-        {"conta", "nativa", "local", "marketplace"},
+        {"conta", "nativa", "local", "marketplace", "comunidade"},
         None,
     ),
     "agentes.json": (
@@ -40,11 +44,30 @@ FONTES = {
 }
 
 
+def validar_curadoria(rotulo, item, trilhas):
+    """Campos da curadoria: opcionais, mas validados quando aparecem."""
+    for t in item.get("trilhas", []):
+        if t not in trilhas:
+            raise ValueError(f"{rotulo} cita a trilha {t!r}, que nao existe")
+    if "nivel" in item and item["nivel"] not in NIVEIS_VALIDOS:
+        raise ValueError(f"{rotulo} tem nivel invalido {item['nivel']!r}")
+    if item.get("trilhas") and not item.get("brilho"):
+        raise ValueError(f"{rotulo} esta numa trilha mas nao tem 'brilho'")
+    if "instalar" in item and not (
+        isinstance(item["instalar"], list) and all(isinstance(c, str) and c for c in item["instalar"])
+    ):
+        raise ValueError(f"{rotulo}: 'instalar' deve ser lista de comandos")
+    if item.get("fonte") and not item["fonte"].startswith("https://"):
+        raise ValueError(f"{rotulo}: 'fonte' deve ser https")
+
+
 def carregar(arquivo):
-    """Le e valida um dos JSON, devolvendo a lista de entradas."""
+    """Le e valida um dos JSON, devolvendo a lista de entradas e as trilhas."""
     chave, campos, origens, usos = FONTES[arquivo]
     caminho = DOCS / arquivo
-    itens = json.loads(caminho.read_text(encoding="utf-8")).get(chave)
+    bruto = json.loads(caminho.read_text(encoding="utf-8"))
+    itens = bruto.get(chave)
+    trilhas = bruto.get("trilhas") or {}
     if not isinstance(itens, list) or not itens:
         raise ValueError(f"{arquivo}: a chave '{chave}' deve ser uma lista nao vazia")
 
@@ -57,7 +80,14 @@ def carregar(arquivo):
             raise ValueError(f"{rotulo} tem origem invalida {item['origem']!r}")
         if usos is not None and item["uso"] not in usos:
             raise ValueError(f"{rotulo} tem uso invalido {item['uso']!r}")
-    return chave, itens
+        validar_curadoria(rotulo, item, trilhas)
+
+    for tid, t in trilhas.items():
+        nomes = {i["nome"] for i in itens if tid in i.get("trilhas", [])}
+        fora = [n for n in t.get("ordem", []) if n not in nomes]
+        if fora:
+            raise ValueError(f"{arquivo}: a ordem da trilha {tid!r} cita itens fora dela: {fora}")
+    return chave, itens, trilhas
 
 
 def montar_bloco(dados):
@@ -82,9 +112,11 @@ def main():
 
     dados = {}
     for arquivo in FONTES:
-        chave, itens = carregar(arquivo)
+        chave, itens, trilhas = carregar(arquivo)
         dados[chave] = itens
-    resumo = ", ".join(f"{len(v)} {k}" for k, v in dados.items())
+        if trilhas:
+            dados.setdefault("trilhas", {}).update(trilhas)
+    resumo = ", ".join(f"{len(v)} {k}" for k, v in dados.items() if k != "trilhas")
 
     html = HTML_PATH.read_text(encoding="utf-8")
     de = html.find(INICIO)

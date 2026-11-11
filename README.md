@@ -1,13 +1,91 @@
 # Índice de Skills e Agentes — Claude Code
 
-Catálogo das skills e dos agentes disponíveis num setup real do Claude Code, com o que cada um faz e quando usar. Feito para alunos: serve para descobrir o que existe antes de sair pedindo.
+Catálogo das skills e dos agentes disponíveis num setup real do Claude Code, com o que cada um faz e quando usar. Feito para alunos: serve para descobrir o que existe antes de sair pedindo, e para escolher o que instalar a seguir.
 
 **Página buscável:** https://skills.gustavopires.dev — com link direto para os agentes em https://skills.gustavopires.dev/#agentes. Também funciona offline: abra `docs/index.html` direto no navegador.
 
 | | Total | O que tem |
 | --- | --- | --- |
-| [Skills](#skills) | 68 | 35 ativas (13 da conta, 21 nativas, 1 local) + 33 em plugins do marketplace — levantadas em 22/10/2026 |
+| [Skills](#skills) | 99 | 35 ativas (13 da conta, 21 nativas, 1 local) + 33 em plugins do marketplace, levantadas em 22/10/2026, + 31 da curadoria de 11/11/2026 |
+| [Curadoria](#curadoria--três-trilhas) | 38 | Skills, plugins e agentes recomendados em três trilhas: alunos, arquitetura e produto, presença digital — 11/11/2026 |
 | [Agentes](#agentes) | 55 | 5 nativos + 37 em plugins do marketplace + 13 de projetos reais, anonimizados — levantados em 11/11/2026 |
+
+---
+
+## Curadoria — três trilhas
+
+Revisada em 11/11/2026, depois de uma varredura nos marketplaces oficiais (`anthropics/claude-plugins-official`, com 317 plugins nessa data, e `anthropics/skills`) e em coleções da comunidade. Na página, cada item tem o comando de instalar com botão de copiar, e cada trilha tem link próprio (`#alunos`, `#arquiteto`, `#presenca`) para mandar à turma.
+
+Skill da comunidade pode rodar código na sua máquina: leia o `SKILL.md` e os scripts antes de instalar.
+
+### Comece por aqui — para quem está no primeiro ou segundo projeto
+
+Em ordem: primeiro o Claude explica, depois você constrói com método, e no fim mostra o trabalho com cara de produto.
+
+| | Item | Nível | Por que | Instalar |
+| --- | --- | --- | --- | --- |
+| 1 | `/init` | iniciante | O Claude lê o seu projeto e escreve o manual dele. | `/init` |
+| 2 | [`learning-output-style`](https://github.com/anthropics/claude-plugins-official) ★ | iniciante | O Claude para e pede para você escrever a parte que ensina. | `/plugin install learning-output-style@claude-plugins-official` |
+| 3 | [`explanatory-output-style`](https://github.com/anthropics/claude-plugins-official) | iniciante | Cada decisão vem com o porquê. | `/plugin install explanatory-output-style@claude-plugins-official` |
+| 4 | [`academy-guide`](https://github.com/anthropics/skills/tree/main/skills/academy-guide) | iniciante | Toda dúvida de 'como faço' vira um curso indicado. | `/plugin marketplace add anthropics/skills` ; `/plugin install academy-guide@anthropic-agent-skills` |
+| 5 | [`discernment-nudge`](https://github.com/anthropics/skills/tree/main/skills/discernment-nudge) | iniciante | Perguntas para você checar antes de confiar na resposta. | `/plugin marketplace add anthropics/skills` ; `/plugin install discernment-nudge@anthropic-agent-skills` |
+| 6 | [`andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills) | iniciante | Quatro regras que impedem o Claude de complicar demais. | `/plugin marketplace add forrestchang/andrej-karpathy-skills` ; `/plugin install andrej-karpathy-skills@karpathy-skills` |
+| 7 | [`context7`](https://github.com/upstash/context7) | iniciante | Documentação da versão certa, sem API inventada. | `/plugin install context7@claude-plugins-official` |
+| 8 | [`frontend-design`](https://github.com/anthropics/skills/tree/main/skills/frontend-design) ★ | iniciante | Da tela genérica para uma interface com cara de produto. | `/plugin install frontend-design@claude-plugins-official` |
+| 9 | [`algorithmic-art`](https://github.com/anthropics/skills/tree/main/skills/algorithmic-art) ★ | iniciante | Arte generativa em p5.js a partir de uma frase. | `/plugin marketplace add anthropics/skills` ; `/plugin install example-skills@anthropic-agent-skills` |
+| 10 | [`canvas-design`](https://github.com/anthropics/skills/tree/main/skills/canvas-design) | iniciante | Pôster com direção de arte, em PNG ou PDF. | `/plugin marketplace add anthropics/skills` ; `/plugin install example-skills@anthropic-agent-skills` |
+| 11 | [`commit-commands`](https://github.com/anthropics/claude-plugins-official) | iniciante | /commit escreve a mensagem; /commit-push-pr abre o PR. | `/plugin install commit-commands@claude-plugins-official` |
+| 12 | `/code-review` | intermediário | Um revisor que acha o bug antes do professor. | `/code-review` |
+| 13 | [`playwright`](https://github.com/microsoft/playwright-mcp) ★ | intermediário | O Claude abre o navegador e testa o que acabou de fazer. | `/plugin install playwright@claude-plugins-official` |
+| 14 | [`webapp-testing`](https://github.com/anthropics/skills/tree/main/skills/webapp-testing) | intermediário | Teste de interface escrito e rodado pelo próprio Claude. | `/plugin marketplace add anthropics/skills` ; `/plugin install example-skills@anthropic-agent-skills` |
+| 15 | [`superpowers`](https://github.com/obra/superpowers) ★ | intermediário | Brainstorm, plano, TDD e depuração com método de engenheiro sênior. | `/plugin install superpowers@claude-plugins-official` |
+| 16 | `/skill-creator` | intermediário | Escreva a sua primeira skill e meça se ela dispara. | `/skill-creator` |
+| 17 | [`voltagent-core-dev`](https://github.com/VoltAgent/awesome-claude-code-subagents) | intermediário | Um time de subagentes para delegar trabalho. | `/plugin marketplace add VoltAgent/awesome-claude-code-subagents` ; `/plugin install voltagent-core-dev@voltagent-subagents` |
+| 18 | [`frontend-slides`](https://github.com/zarazhangrui/frontend-slides) | iniciante | Apresentação animada no navegador para a entrega do projeto. | `/plugin marketplace add zarazhangrui/frontend-slides` ; `/plugin install frontend-slides@frontend-slides` |
+| 19 | [`remotion`](https://github.com/remotion-dev/skills) ★ | intermediário | Vídeo feito com código React, pronto para Reels. | `npx skills add remotion-dev/skills` |
+| 20 | [`web-asset-generator`](https://github.com/alonw0/web-asset-generator) | iniciante | Favicon, ícone e prévia social de uma vez. | `/plugin marketplace add alonw0/web-asset-generator` ; `/plugin install web-asset-generator@web-asset-generator-marketplace` |
+
+### Arquitetura e produto — para quem já entrega e quer escala
+
+Método, revisão em camadas, segurança e integração. O que separa protótipo de sistema.
+
+| | Item | Nível | Por que | Instalar |
+| --- | --- | --- | --- | --- |
+| 1 | [`context7`](https://github.com/upstash/context7) | iniciante | Documentação da versão certa, sem API inventada. | `/plugin install context7@claude-plugins-official` |
+| 2 | [`andrej-karpathy-skills`](https://github.com/multica-ai/andrej-karpathy-skills) | iniciante | Quatro regras que impedem o Claude de complicar demais. | `/plugin marketplace add forrestchang/andrej-karpathy-skills` ; `/plugin install andrej-karpathy-skills@karpathy-skills` |
+| 3 | [`playwright`](https://github.com/microsoft/playwright-mcp) ★ | intermediário | O Claude abre o navegador e testa o que acabou de fazer. | `/plugin install playwright@claude-plugins-official` |
+| 4 | [`superpowers`](https://github.com/obra/superpowers) ★ | intermediário | Brainstorm, plano, TDD e depuração com método de engenheiro sênior. | `/plugin install superpowers@claude-plugins-official` |
+| 5 | `deep-research` | intermediário | Uma pesquisa com subagentes que volta com relatório e fontes. | já vem ligada |
+| 6 | `/code-review` | intermediário | Um revisor que acha o bug antes do professor. | `/code-review` |
+| 7 | `claude-automation-recommender` | intermediário | Diz quais hooks, skills e MCPs valem a pena neste repositório. | `/plugin install claude-code-setup@claude-plugins-official` |
+| 8 | [`feature-dev`](https://github.com/anthropics/claude-plugins-official) | intermediário | Explora, desenha a arquitetura e revisa antes de você aceitar. | `/plugin install feature-dev@claude-plugins-official` |
+| 9 | [`security-guidance`](https://github.com/anthropics/claude-plugins-official) | intermediário | Avisa na hora em que o código inseguro é escrito, não depois. | `/plugin install security-guidance@claude-plugins-official` |
+| 10 | [`doc-coauthoring`](https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring) | intermediário | Specs, PRDs e RFCs escritos a quatro mãos. | `/plugin marketplace add anthropics/skills` ; `/plugin install example-skills@anthropic-agent-skills` |
+| 11 | [`voltagent-core-dev`](https://github.com/VoltAgent/awesome-claude-code-subagents) | intermediário | Um time de subagentes para delegar trabalho. | `/plugin marketplace add VoltAgent/awesome-claude-code-subagents` ; `/plugin install voltagent-core-dev@voltagent-subagents` |
+| 12 | [`react-best-practices`](https://github.com/vercel-labs/agent-skills) | intermediário | As regras de React e Next.js de quem faz o Next.js. | `npx skills add vercel-labs/agent-skills` |
+| 13 | `claude-security` | avançado | Um painel de agentes caça a falha e já traz o patch verificado. | `/plugin install claude-security@claude-plugins-official` |
+| 14 | [`pr-review-toolkit`](https://github.com/anthropics/claude-plugins-official) | avançado | Seis revisores especialistas olhando o mesmo PR. | `/plugin install pr-review-toolkit@claude-plugins-official` |
+| 15 | [`chrome-devtools-mcp`](https://github.com/ChromeDevTools/chrome-devtools-mcp) | avançado | O DevTools do Chrome, operado pelo Claude. | `/plugin install chrome-devtools-mcp@claude-plugins-official` |
+| 16 | [`mcp-builder`](https://github.com/anthropics/skills/tree/main/skills/mcp-builder) | avançado | Do serviço externo ao servidor MCP, com avaliação. | `/plugin marketplace add anthropics/skills` ; `/plugin install example-skills@anthropic-agent-skills` |
+| 17 | [`wshobson/agents`](https://github.com/wshobson/agents) | avançado | 94 plugins especialistas; pegue só o do seu stack. | `/plugin marketplace add wshobson/agents` ; `/plugin install python-development@claude-code-workflows` |
+| 18 | [`trailofbits`](https://github.com/trailofbits/skills) | avançado | Auditoria com CodeQL e Semgrep, do jeito de quem audita para valer. | `/plugin marketplace add trailofbits/skills` ; `/plugin install static-analysis@trailofbits` |
+
+### Presença digital — Site, LinkedIn e Instagram no mesmo tom
+
+SEO para o Google, GEO para as IAs, a sua voz nos posts e a arte no tamanho certo.
+
+| | Item | Nível | Por que | Instalar |
+| --- | --- | --- | --- | --- |
+| 1 | [`frontend-design`](https://github.com/anthropics/skills/tree/main/skills/frontend-design) ★ | iniciante | Da tela genérica para uma interface com cara de produto. | `/plugin install frontend-design@claude-plugins-official` |
+| 2 | [`social-media-skills`](https://github.com/charlie947/social-media-skills) ★ | iniciante | Aprende a sua voz e escreve LinkedIn, Reels e newsletter. | `/plugin marketplace add charlie947/social-media-skills` ; `/plugin install social-media-skills@social-media-skills` |
+| 3 | [`canva`](https://github.com/anthropics/claude-plugins-official) | iniciante | Peça a arte em português e receba no Canva, já no tamanho. | `/plugin install canva@claude-plugins-official` |
+| 4 | [`canvas-design`](https://github.com/anthropics/skills/tree/main/skills/canvas-design) | iniciante | Pôster com direção de arte, em PNG ou PDF. | `/plugin marketplace add anthropics/skills` ; `/plugin install example-skills@anthropic-agent-skills` |
+| 5 | [`theme-factory`](https://github.com/anthropics/skills/tree/main/skills/theme-factory) | iniciante | Dez temas prontos para slide, doc e página. | `/plugin marketplace add anthropics/skills` ; `/plugin install example-skills@anthropic-agent-skills` |
+| 6 | [`web-asset-generator`](https://github.com/alonw0/web-asset-generator) | iniciante | Favicon, ícone e prévia social de uma vez. | `/plugin marketplace add alonw0/web-asset-generator` ; `/plugin install web-asset-generator@web-asset-generator-marketplace` |
+| 7 | [`remotion`](https://github.com/remotion-dev/skills) ★ | intermediário | Vídeo feito com código React, pronto para Reels. | `npx skills add remotion-dev/skills` |
+| 8 | [`marketing-skills`](https://github.com/coreyhaines31/marketingskills) ★ | intermediário | Copy, SEO, GEO e lançamento: um time de marketing em forma de skill. | `/plugin marketplace add coreyhaines31/marketingskills` ; `/plugin install marketing-skills@marketingskills` |
+| 9 | [`claude-seo`](https://github.com/AgriciDaniel/claude-seo) | intermediário | Auditoria de SEO em 15 minutos, com plano priorizado. | `/plugin marketplace add AgriciDaniel/claude-seo` ; `/plugin install claude-seo@agricidaniel-claude-seo` |
+| 10 | [`geo-seo-claude`](https://github.com/zubair-trabzada/geo-seo-claude) | intermediário | Seu site citado pelas IAs, não só listado no Google. | `git clone https://github.com/zubair-trabzada/geo-seo-claude.git` |
 
 ---
 
@@ -127,9 +205,9 @@ Fica em `~/.claude/skills/` e vale em todas as sessões da máquina.
 
 Traz seis arquivos de referência (aplicações Android, JavaScript, nativas, observação de runtime, fluxos de evidência, recuperação de conexão) e expõe cerca de 170 ferramentas via servidor MCP. Instalar a skill não registra o servidor — isso é um passo separado.
 
-## Skills do marketplace oficial — 33 em 19 plugins
+## Skills do marketplace oficial — seleção de 33 em 19 plugins
 
-O marketplace `anthropics/claude-plugins-official` está cadastrado na máquina, mas **nenhum plugin está instalado**. O catálogo abaixo é o que dá para ligar com `/plugin install <nome>`.
+O marketplace `anthropics/claude-plugins-official` está cadastrado na máquina, mas **nenhum plugin está instalado**. A tabela abaixo é a seleção levantada em 22/10; em 11/11/2026 o marketplace já tinha 317 plugins, e os mais úteis entraram na curadoria acima. Tudo se liga com `/plugin install <nome>@claude-plugins-official`.
 
 | Plugin | Skills que traz | O que faz |
 | --- | --- | --- |
@@ -266,13 +344,16 @@ O que eles têm em comum, e o que o template padrão não ensina: **cada um tem 
 README.md          este índice
 docs/
   index.html       página buscável, com abas Skills e Agentes
-  skills.json      as skills — fonte única
+  skills.json      as skills e as trilhas da curadoria — fonte única
   agentes.json     os agentes — fonte única
+  og.png           imagem de prévia (LinkedIn, WhatsApp), gerada
+  CNAME            domínio do GitHub Pages: skills.gustavopires.dev
 scripts/
   embed.py         injeta os dois JSON dentro de index.html
+  og.py            gera docs/og.png com as contagens do skills.json
 ```
 
-Os JSON são a fonte da verdade. A página não faz `fetch` deles — isso quebraria ao abrir o arquivo local, porque o navegador bloqueia requisição em `file://`. Em vez disso, os dados ficam embutidos no HTML entre dois marcadores, e o `scripts/embed.py` regenera esse trecho.
+Os JSON são a fonte da verdade. No `skills.json`, a curadoria acrescenta campos opcionais: `trilhas`, `nivel` (`iniciante`, `intermediario`, `avancado`), `brilho` (a frase de impacto do card), `instalar` (lista de comandos), `fonte` e `destaque`; a origem `comunidade` marca repositório de terceiros. A página não faz `fetch` deles — isso quebraria ao abrir o arquivo local, porque o navegador bloqueia requisição em `file://`. Em vez disso, os dados ficam embutidos no HTML entre dois marcadores, e o `scripts/embed.py` regenera esse trecho.
 
 Ou seja: **editou um JSON? rode `python scripts/embed.py`** antes de commitar. O `python scripts/embed.py --check` valida os campos e avisa se o HTML saiu de sincronia.
 
@@ -280,6 +361,7 @@ Ou seja: **editou um JSON? rode `python scripts/embed.py`** antes de commitar. O
 | --- | --- |
 | `python scripts/embed.py --check` | valida os JSON e confere se o HTML está sincronizado |
 | `python scripts/embed.py` | injeta `skills.json` e `agentes.json` em `docs/index.html` |
+| `python scripts/og.py` | regenera a imagem de prévia `docs/og.png` (precisa de Pillow) |
 | `python -m http.server 8000 --directory docs` | serve a página em http://localhost:8000 |
 
 Não há nada a instalar: só Python 3 com a biblioteca padrão. A publicação é via GitHub Pages (branch `main`, pasta `/docs`).
