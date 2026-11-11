@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
-"""Injeta docs/skills.json dentro de docs/index.html.
+"""Injeta docs/skills.json e docs/agentes.json dentro de docs/index.html.
 
-A pagina nao faz fetch do JSON de proposito: um fetch falharia ao abrir o
+O skills.json traz tambem as trilhas da curadoria, que vao juntas.
+
+A pagina nao faz fetch dos JSON de proposito: um fetch falharia ao abrir o
 index.html como arquivo local, porque o navegador bloqueia requisicao em
 file://. Os dados ficam embutidos entre dois marcadores no HTML, e este
 script e o unico lugar que reescreve esse trecho.
@@ -17,55 +19,80 @@ import sys
 from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
-JSON_PATH = RAIZ / "docs" / "skills.json"
-HTML_PATH = RAIZ / "docs" / "index.html"
+DOCS = RAIZ / "docs"
+HTML_PATH = DOCS / "index.html"
 
 INICIO = "<!-- DADOS:INICIO -->"
 FIM = "<!-- DADOS:FIM -->"
 
-CAMPOS = ("nome", "origem", "plugin", "comando", "grupo", "descricao", "quando")
-ORIGENS_VALIDAS = {"conta", "nativa", "local", "marketplace", "comunidade"}
 NIVEIS_VALIDOS = {"iniciante", "intermediario", "avancado"}
 
+# arquivo -> (chave da lista, campos obrigatorios, origens validas, usos validos)
+FONTES = {
+    "skills.json": (
+        "skills",
+        ("nome", "origem", "plugin", "comando", "grupo", "descricao", "quando"),
+        {"conta", "nativa", "local", "marketplace", "comunidade"},
+        None,
+    ),
+    "agentes.json": (
+        "agentes",
+        ("nome", "origem", "plugin", "grupo", "modelo", "uso", "descricao", "quando"),
+        {"nativo", "marketplace", "projeto"},
+        {"direto", "interno", "sessao"},
+    ),
+}
 
-def carregar_dados():
-    """Le e valida o JSON, devolvendo skills e trilhas."""
-    dados = json.loads(JSON_PATH.read_text(encoding="utf-8"))
-    trilhas = dados.get("trilhas") or {}
-    skills = dados.get("skills")
-    if not isinstance(skills, list) or not skills:
-        raise ValueError("skills.json: a chave 'skills' deve ser uma lista nao vazia")
 
-    for i, s in enumerate(skills):
-        faltando = [c for c in CAMPOS if c not in s]
+def validar_curadoria(rotulo, item, trilhas):
+    """Campos da curadoria: opcionais, mas validados quando aparecem."""
+    for t in item.get("trilhas", []):
+        if t not in trilhas:
+            raise ValueError(f"{rotulo} cita a trilha {t!r}, que nao existe")
+    if "nivel" in item and item["nivel"] not in NIVEIS_VALIDOS:
+        raise ValueError(f"{rotulo} tem nivel invalido {item['nivel']!r}")
+    if item.get("trilhas") and not item.get("brilho"):
+        raise ValueError(f"{rotulo} esta numa trilha mas nao tem 'brilho'")
+    if "instalar" in item and not (
+        isinstance(item["instalar"], list) and all(isinstance(c, str) and c for c in item["instalar"])
+    ):
+        raise ValueError(f"{rotulo}: 'instalar' deve ser lista de comandos")
+    if item.get("fonte") and not item["fonte"].startswith("https://"):
+        raise ValueError(f"{rotulo}: 'fonte' deve ser https")
+
+
+def carregar(arquivo):
+    """Le e valida um dos JSON, devolvendo a lista de entradas e as trilhas."""
+    chave, campos, origens, usos = FONTES[arquivo]
+    caminho = DOCS / arquivo
+    bruto = json.loads(caminho.read_text(encoding="utf-8"))
+    itens = bruto.get(chave)
+    trilhas = bruto.get("trilhas") or {}
+    if not isinstance(itens, list) or not itens:
+        raise ValueError(f"{arquivo}: a chave '{chave}' deve ser uma lista nao vazia")
+
+    for i, item in enumerate(itens):
+        rotulo = f"{arquivo}: entrada {i} ({item.get('nome', '?')})"
+        faltando = [c for c in campos if c not in item]
         if faltando:
-            raise ValueError(
-                f"skills.json: entrada {i} ({s.get('nome', '?')}) sem os campos {faltando}"
-            )
-        if s["origem"] not in ORIGENS_VALIDAS:
-            raise ValueError(
-                f"skills.json: entrada {i} ({s['nome']}) tem origem invalida {s['origem']!r}"
-            )
-        # Campos da curadoria: opcionais, mas validados quando aparecem.
-        for t in s.get("trilhas", []):
-            if t not in trilhas:
-                raise ValueError(f"skills.json: {s['nome']} cita a trilha {t!r}, que nao existe")
-        if "nivel" in s and s["nivel"] not in NIVEIS_VALIDOS:
-            raise ValueError(f"skills.json: {s['nome']} tem nivel invalido {s['nivel']!r}")
-        if s.get("trilhas") and not s.get("brilho"):
-            raise ValueError(f"skills.json: {s['nome']} esta numa trilha mas nao tem 'brilho'")
-        if "instalar" in s and not (
-            isinstance(s["instalar"], list) and all(isinstance(c, str) and c for c in s["instalar"])
-        ):
-            raise ValueError(f"skills.json: {s['nome']}: 'instalar' deve ser lista de comandos")
-        if s.get("fonte") and not s["fonte"].startswith("https://"):
-            raise ValueError(f"skills.json: {s['nome']}: 'fonte' deve ser https")
-    return skills, trilhas
+            raise ValueError(f"{rotulo} sem os campos {faltando}")
+        if item["origem"] not in origens:
+            raise ValueError(f"{rotulo} tem origem invalida {item['origem']!r}")
+        if usos is not None and item["uso"] not in usos:
+            raise ValueError(f"{rotulo} tem uso invalido {item['uso']!r}")
+        validar_curadoria(rotulo, item, trilhas)
+
+    for tid, t in trilhas.items():
+        nomes = {i["nome"] for i in itens if tid in i.get("trilhas", [])}
+        fora = [n for n in t.get("ordem", []) if n not in nomes]
+        if fora:
+            raise ValueError(f"{arquivo}: a ordem da trilha {tid!r} cita itens fora dela: {fora}")
+    return chave, itens, trilhas
 
 
-def montar_bloco(skills, trilhas):
+def montar_bloco(dados):
     """Monta o trecho de HTML que vai entre os marcadores."""
-    payload = json.dumps({"skills": skills, "trilhas": trilhas}, ensure_ascii=False, separators=(",", ":"))
+    payload = json.dumps(dados, ensure_ascii=False, separators=(",", ":"))
     # Um "</" literal encerraria o <script> antes da hora.
     payload = payload.replace("</", "<\\/")
     return (
@@ -83,32 +110,39 @@ def main():
     )
     args = ap.parse_args()
 
-    skills, trilhas = carregar_dados()
-    html = HTML_PATH.read_text(encoding="utf-8")
+    dados = {}
+    for arquivo in FONTES:
+        chave, itens, trilhas = carregar(arquivo)
+        dados[chave] = itens
+        if trilhas:
+            dados.setdefault("trilhas", {}).update(trilhas)
+    resumo = ", ".join(f"{len(v)} {k}" for k, v in dados.items() if k != "trilhas")
 
+    html = HTML_PATH.read_text(encoding="utf-8")
     de = html.find(INICIO)
     ate = html.find(FIM)
     if de == -1 or ate == -1 or ate < de:
         print(f"erro: marcadores {INICIO} / {FIM} nao encontrados em {HTML_PATH.name}")
         return 1
 
-    novo = html[:de] + montar_bloco(skills, trilhas) + html[ate + len(FIM):]
+    novo = html[:de] + montar_bloco(dados) + html[ate + len(FIM):]
 
     if novo == html:
-        print(f"ok: {HTML_PATH.name} sincronizado ({len(skills)} skills)")
+        print(f"ok: {HTML_PATH.name} sincronizado ({resumo})")
         return 0
 
     if args.check:
-        print(
-            f"fora de sincronia: {JSON_PATH.name} mudou sem rodar o build "
-            f"({len(skills)} skills no JSON). Rode: python scripts/embed.py"
-        )
+        print(f"fora de sincronia: os JSON mudaram sem rodar o build ({resumo}). Rode: python scripts/embed.py")
         return 1
 
     HTML_PATH.write_text(novo, encoding="utf-8")
-    print(f"gravado: {HTML_PATH.name} com {len(skills)} skills")
+    print(f"gravado: {HTML_PATH.name} com {resumo}")
     return 0
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        sys.exit(main())
+    except ValueError as e:
+        print(f"erro: {e}")
+        sys.exit(1)
