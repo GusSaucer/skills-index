@@ -1,0 +1,572 @@
+{
+  "gerado_em": "2026-11-11",
+  "origens": {
+    "nativo": "Tipos de subagente que já vêm com o Claude Code",
+    "marketplace": "Agentes que chegam junto com plugins do marketplace oficial anthropics/claude-plugins-official — disponíveis para instalar",
+    "projeto": "Agentes escritos para projetos reais, em <projeto>/.claude/agents/ — anonimizados, descritos pelo padrão que ensinam"
+  },
+  "usos": {
+    "direto": "Você (ou o Claude) chama quando precisa",
+    "interno": "Disparado pelo próprio plugin dentro de um fluxo — não é para chamar à mão",
+    "sessao": "Roda como agente principal da sessão: claude --agent <plugin>:<agente>"
+  },
+  "agentes": [
+    {
+      "nome": "general-purpose",
+      "origem": "nativo",
+      "plugin": null,
+      "grupo": "Nativos",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Agente de uso geral com todas as ferramentas: pesquisa, busca de código e tarefas de vários passos.",
+      "quando": "Uma busca em que você não tem certeza de acertar o arquivo nas primeiras tentativas, ou um trabalho paralelo que não deve encher o seu contexto."
+    },
+    {
+      "nome": "Explore",
+      "origem": "nativo",
+      "plugin": null,
+      "grupo": "Nativos",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Busca somente-leitura em leque largo: varre muitos arquivos, pastas e convenções de nome e devolve só a conclusão. Lê trechos, não arquivos inteiros — localiza código, não audita.",
+      "quando": "A resposta exige passar por muitos arquivos e você só precisa do resultado, não do despejo de cada um."
+    },
+    {
+      "nome": "Plan",
+      "origem": "nativo",
+      "plugin": null,
+      "grupo": "Nativos",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Arquiteto de software somente-leitura: desenha o plano de implementação passo a passo, aponta os arquivos críticos e pesa as alternativas.",
+      "quando": "Antes de uma mudança grande, para ter o plano antes de tocar em código."
+    },
+    {
+      "nome": "claude-code-guide",
+      "origem": "nativo",
+      "plugin": null,
+      "grupo": "Nativos",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Responde perguntas sobre o próprio Claude Code, o Agent SDK e a API da Anthropic, consultando a documentação.",
+      "quando": "\"Como eu faço um hook?\", \"o Claude Code consegue X?\", dúvidas de configuração."
+    },
+    {
+      "nome": "statusline-setup",
+      "origem": "nativo",
+      "plugin": null,
+      "grupo": "Nativos",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Configura a linha de status do Claude Code.",
+      "quando": "Quer mostrar branch, modelo ou custo na barra do terminal."
+    },
+
+    {
+      "nome": "code-architect",
+      "origem": "marketplace",
+      "plugin": "feature-dev",
+      "grupo": "Desenvolver feature",
+      "modelo": "sonnet",
+      "uso": "direto",
+      "descricao": "Desenha a arquitetura de uma feature a partir dos padrões que o código já usa, e entrega a planta: arquivos a criar e alterar, componentes, fluxo de dados.",
+      "quando": "Feature nova num código que você ainda não domina."
+    },
+    {
+      "nome": "code-explorer",
+      "origem": "marketplace",
+      "plugin": "feature-dev",
+      "grupo": "Desenvolver feature",
+      "modelo": "sonnet",
+      "uso": "direto",
+      "descricao": "Analisa uma feature existente a fundo: traça os caminhos de execução, mapeia as camadas e documenta dependências.",
+      "quando": "Precisa entender como algo funciona antes de mexer."
+    },
+    {
+      "nome": "code-reviewer (feature-dev)",
+      "origem": "marketplace",
+      "plugin": "feature-dev",
+      "grupo": "Desenvolver feature",
+      "modelo": "sonnet",
+      "uso": "direto",
+      "descricao": "Revisa código procurando bug, erro de lógica, falha de segurança e desvio das convenções, filtrando por confiança para reportar só o que importa.",
+      "quando": "Fechou a feature e quer uma revisão antes do PR."
+    },
+
+    {
+      "nome": "code-reviewer (pr-review-toolkit)",
+      "origem": "marketplace",
+      "plugin": "pr-review-toolkit",
+      "grupo": "Revisar PR",
+      "modelo": "opus",
+      "uso": "direto",
+      "descricao": "Revisa aderência às diretrizes do projeto, guia de estilo e boas práticas.",
+      "quando": "Logo depois de escrever ou alterar código, de forma proativa."
+    },
+    {
+      "nome": "silent-failure-hunter",
+      "origem": "marketplace",
+      "plugin": "pr-review-toolkit",
+      "grupo": "Revisar PR",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Caça falha silenciosa: erro engolido, tratamento de exceção raso, fallback que esconde problema.",
+      "quando": "Revisar um PR que mexe em tratamento de erro."
+    },
+    {
+      "nome": "pr-test-analyzer",
+      "origem": "marketplace",
+      "plugin": "pr-review-toolkit",
+      "grupo": "Revisar PR",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Avalia se os testes do PR cobrem de verdade a funcionalidade nova e os casos de borda.",
+      "quando": "PR criado ou atualizado."
+    },
+    {
+      "nome": "type-design-analyzer",
+      "origem": "marketplace",
+      "plugin": "pr-review-toolkit",
+      "grupo": "Revisar PR",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Analisa o desenho dos tipos: encapsulamento, invariantes expressas no tipo, estados impossíveis que o tipo ainda permite.",
+      "quando": "Introduziu um tipo novo ou refatorou um existente."
+    },
+    {
+      "nome": "comment-analyzer",
+      "origem": "marketplace",
+      "plugin": "pr-review-toolkit",
+      "grupo": "Revisar PR",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Confere se os comentários e docstrings estão corretos, completos e não vão apodrecer.",
+      "quando": "Depois de gerar documentação grande no código."
+    },
+    {
+      "nome": "code-simplifier (pr-review-toolkit)",
+      "origem": "marketplace",
+      "plugin": "pr-review-toolkit",
+      "grupo": "Revisar PR",
+      "modelo": "opus",
+      "uso": "direto",
+      "descricao": "Simplifica o código alterado para clareza e consistência, sem mudar o comportamento.",
+      "quando": "O código funciona mas ficou difícil de ler."
+    },
+    {
+      "nome": "code-simplifier",
+      "origem": "marketplace",
+      "plugin": "code-simplifier",
+      "grupo": "Revisar PR",
+      "modelo": "opus",
+      "uso": "direto",
+      "descricao": "Mesma ideia, como plugin isolado: refina o código recém-alterado para clareza e manutenção, preservando toda a funcionalidade.",
+      "quando": "Você só quer o simplificador, sem o kit de revisão inteiro."
+    },
+
+    {
+      "nome": "legacy-analyst",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Lê a fundo código legado (COBOL, Java, .NET, Node, o que for) e monta o entendimento estrutural e de comportamento: dependências, código morto, o que o sistema faz de fato.",
+      "quando": "Descoberta — o primeiro passo de qualquer modernização."
+    },
+    {
+      "nome": "business-rules-extractor",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Extrai regra de negócio, cálculo, validação e política do código legado em especificações testáveis no formato Dado / Quando / Então.",
+      "quando": "Separar \"o que o negócio exige\" de \"como o código velho calhou de implementar\"."
+    },
+    {
+      "nome": "test-engineer",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Escreve testes de caracterização, contrato e equivalência que fixam o comportamento do legado, para provar que a transformação não mudou nada.",
+      "quando": "Antes de qualquer reescrita."
+    },
+    {
+      "nome": "architecture-critic",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Revisor adversarial da arquitetura proposta: procura excesso de engenharia, requisito esquecido e alternativa mais simples.",
+      "quando": "Tem uma arquitetura-alvo e quer que alguém tente derrubá-la."
+    },
+    {
+      "nome": "scaffolder",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Monta um serviço do sistema novo a partir da arquitetura e da especificação aprovadas: esqueleto, modelo de domínio, stubs de API e testes de aceitação executáveis. Só escreve na própria pasta.",
+      "quando": "Arquitetura aprovada, hora de criar o primeiro serviço."
+    },
+    {
+      "nome": "version-delta-analyst",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Identifica as quebras entre duas versões da MESMA stack (.NET Framework 4.8 → .NET 8, Java 8 → 21, Spring Boot 2 → 3) que de fato atingem o seu código, e conduz as ferramentas de migração do ecossistema.",
+      "quando": "Atualização de versão em que o código é preservado e ajustado, não reescrito."
+    },
+    {
+      "nome": "uplift-migrator",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Migra UM módulo de cada vez aplicando um playbook já provado num piloto — diff mínimo, depois roda o build real daquele módulo. Recusa migrar se ainda não existe playbook.",
+      "quando": "O piloto deu certo e é hora de repetir nos outros módulos."
+    },
+    {
+      "nome": "security-auditor",
+      "origem": "marketplace",
+      "plugin": "code-modernization",
+      "grupo": "Modernizar legado",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Revisor de segurança adversarial: OWASP Top 10, CWE, CVE de dependência, segredo exposto, injeção.",
+      "quando": "Levantar dívida de segurança antes de modernizar."
+    },
+
+    {
+      "nome": "claude-security",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": null,
+      "uso": "sessao",
+      "descricao": "Orquestrador do Claude Security: roda uma varredura de ponta a ponta e dispara os agentes abaixo. Só funciona como agente principal da sessão.",
+      "quando": "claude --agent claude-security:claude-security"
+    },
+    {
+      "nome": "scan-inventory",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": "sonnet",
+      "uso": "interno",
+      "descricao": "Cartógrafo somente-leitura: divide o repositório em componentes e garante que nenhum arquivo ficou sem dono na varredura.",
+      "quando": "Primeiro passo da varredura."
+    },
+    {
+      "nome": "scan-researcher",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Pesquisador de vulnerabilidade somente-leitura, um por componente.",
+      "quando": "Fase de busca da varredura."
+    },
+    {
+      "nome": "scan-verifier",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Vota se um achado candidato é real. Vários verificadores votam no mesmo achado — é o que derruba falso positivo.",
+      "quando": "Depois do pesquisador, achado por achado."
+    },
+    {
+      "nome": "scan-redactor",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": "sonnet",
+      "uso": "interno",
+      "descricao": "Troca os valores de credencial encontrados por [REDACTED] nos relatórios finais.",
+      "quando": "Fim da varredura, antes de o relatório sair."
+    },
+    {
+      "nome": "scan-loader",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": "sonnet",
+      "uso": "interno",
+      "descricao": "Carregador somente-leitura: devolve um arquivo JSON da pasta da execução.",
+      "quando": "Quando outro agente do fluxo precisa de um resultado intermediário."
+    },
+    {
+      "nome": "explore (claude-security)",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": "sonnet",
+      "uso": "interno",
+      "descricao": "Explorador de código somente-leitura que os outros agentes do plugin usam para localizar arquivos e traçar fluxos.",
+      "quando": "Sob demanda dos outros agentes."
+    },
+    {
+      "nome": "patch-generator",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Implementa a correção de um achado numa cópia descartável do repositório e entrega como arquivo de patch.",
+      "quando": "Fase de correção."
+    },
+    {
+      "nome": "patch-verifier",
+      "origem": "marketplace",
+      "plugin": "claude-security",
+      "grupo": "Segurança",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Verificador único de cada rodada de correção: revisa o diff contra o achado, roda os testes e declara o grau de confiança.",
+      "quando": "Depois de cada patch gerado."
+    },
+
+    {
+      "nome": "agent-creator",
+      "origem": "marketplace",
+      "plugin": "plugin-dev",
+      "grupo": "Criar plugins e agentes",
+      "modelo": "sonnet",
+      "uso": "direto",
+      "descricao": "Gera um agente novo a partir da descrição do que você precisa: frontmatter, prompt de sistema e condição de disparo.",
+      "quando": "\"Me faz um agente que...\""
+    },
+    {
+      "nome": "plugin-validator",
+      "origem": "marketplace",
+      "plugin": "plugin-dev",
+      "grupo": "Criar plugins e agentes",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Valida a estrutura de um plugin: plugin.json, pastas, arquivos e convenções.",
+      "quando": "Antes de publicar ou instalar um plugin seu."
+    },
+    {
+      "nome": "skill-reviewer",
+      "origem": "marketplace",
+      "plugin": "plugin-dev",
+      "grupo": "Criar plugins e agentes",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Revisa a qualidade de uma skill, com atenção especial à descrição — que é o que decide se ela dispara.",
+      "quando": "Criou ou alterou uma skill."
+    },
+    {
+      "nome": "agent-sdk-verifier-py",
+      "origem": "marketplace",
+      "plugin": "agent-sdk-dev",
+      "grupo": "Criar plugins e agentes",
+      "modelo": "sonnet",
+      "uso": "direto",
+      "descricao": "Verifica se uma aplicação Python do Agent SDK está configurada direito e segue as boas práticas da documentação.",
+      "quando": "Depois de criar ou alterar um app Python com o Agent SDK."
+    },
+    {
+      "nome": "agent-sdk-verifier-ts",
+      "origem": "marketplace",
+      "plugin": "agent-sdk-dev",
+      "grupo": "Criar plugins e agentes",
+      "modelo": "sonnet",
+      "uso": "direto",
+      "descricao": "O mesmo, para aplicações TypeScript do Agent SDK.",
+      "quando": "Depois de criar ou alterar um app TypeScript com o Agent SDK."
+    },
+    {
+      "nome": "conversation-analyzer",
+      "origem": "marketplace",
+      "plugin": "hookify",
+      "grupo": "Criar plugins e agentes",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Lê transcripts de conversa procurando comportamento que valeria impedir com um hook.",
+      "quando": "/hookify sem argumentos — \"o que eu deveria bloquear?\""
+    },
+    {
+      "nome": "repo-scout",
+      "origem": "marketplace",
+      "plugin": "champion-kit",
+      "grupo": "Criar plugins e agentes",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Coletor de evidência somente-leitura: lê CI, setup de revisão, CLAUDE.md, skills e configurações de um repositório e devolve contagens e citações.",
+      "quando": "Disparado pelas skills do champion-kit."
+    },
+
+    {
+      "nome": "math-proof-judge",
+      "origem": "marketplace",
+      "plugin": "math-proof",
+      "grupo": "Matemática",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Juiz do /math-proof:siege: planeja as perguntas de cada rodada, lê as respostas, mantém o livro do que está provado e escreve o proof.md.",
+      "quando": "Uma vez por rodada."
+    },
+    {
+      "nome": "math-proof-worker",
+      "origem": "marketplace",
+      "plugin": "math-proof",
+      "grupo": "Matemática",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Responde uma pergunta autocontida, sem memória entre perguntas.",
+      "quando": "Várias em paralelo, por rodada."
+    },
+    {
+      "nome": "math-proof-worker-deep",
+      "origem": "marketplace",
+      "plugin": "math-proof",
+      "grupo": "Matemática",
+      "modelo": null,
+      "uso": "interno",
+      "descricao": "Versão de esforço maior do trabalhador, usada a partir da rodada de escalonamento.",
+      "quando": "Da rodada 4 em diante, por padrão."
+    },
+
+    {
+      "nome": "guarda-de-contrato-de-api",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto web (SaaS multi-tenant)",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Vigia o contrato entre backend e frontend: envelope de resposta padronizado ({success, data, message}), breaking change e a deriva entre os tipos escritos à mão no frontend e o schema OpenAPI gerado.",
+      "quando": "Tocou em endpoint, serializer, DTO do frontend ou cliente HTTP."
+    },
+    {
+      "nome": "arquiteto-revisor",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto web (SaaS multi-tenant)",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Traça os codepaths, mapeia fluxos e estados de erro, desenha em ASCII a cobertura de testes e entrega o plano de testes. Cobre também migração de dados: backfill, índice, deploy em etapas.",
+      "quando": "ANTES de implementar feature ou refatoração que toque mais de um arquivo."
+    },
+    {
+      "nome": "auditor-de-seguranca",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto web (SaaS multi-tenant)",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "AppSec e LGPD: segredo no histórico do git, supply chain, pipeline, imagem Docker, verificação de webhook, classificação de dado pessoal. Delega isolamento de tenant ao guarda especializado.",
+      "quando": "Antes de release, ou ao mexer em integração externa."
+    },
+    {
+      "nome": "guardiao-da-regra-de-negocio",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto web (SaaS multi-tenant)",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Garante que regra de negócio mora na camada de serviço: views magras, frontend sem lógica de domínio, efeito colateral explícito e custo de query sob controle (N+1, índice, paginação).",
+      "quando": "Criou ou alterou endpoint, cálculo, transição de estado ou query pesada."
+    },
+    {
+      "nome": "guarda-de-isolamento-multi-tenant",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto web (SaaS multi-tenant)",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Verifica que todo acesso a dado filtra pelo tenant antes de buscar, o contexto de RLS do banco, soft delete e permissões. É o dono do OWASP A01 (controle de acesso quebrado) no repositório.",
+      "quando": "Qualquer query, permissão, job ou comando que toque dado de cliente."
+    },
+    {
+      "nome": "matador-de-friccao-de-ux",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto web (SaaS multi-tenant)",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Aplica um checklist próprio de fricção, exige os cinco estados por tela (carregando, vazio, erro, parcial, ok), i18n sem texto fixo no código e permissão refletida na interface.",
+      "quando": "Criou ou alterou lista, tabela, painel, filtro, formulário ou modal."
+    },
+    {
+      "nome": "auditor-de-regras",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto de jogo",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Confere se a regra implementada no código bate com as fontes de verdade do design (documentos e planilhas de regras).",
+      "quando": "ANTES de fechar mudança em regra, combate ou dados do jogo — e sempre que surgir a dúvida \"é assim mesmo?\"."
+    },
+    {
+      "nome": "playtest-headless",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto de jogo",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Roda a suíte de simulação sem interface e lê o resultado como design, não só como verde/vermelho: isso mudou a letalidade? a duração do combate?",
+      "quando": "Depois de mudar regra ou dado, e antes de fechar um marco."
+    },
+    {
+      "nome": "pipeline-de-dados",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto de jogo",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Valida e roda a exportação das planilhas de design para os JSON do jogo, e a carga desses dados no motor.",
+      "quando": "A fonte de dados mudou, ou apareceu erro de carga."
+    },
+    {
+      "nome": "curador-de-assets",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto de jogo",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Aplica o livro-registro de assets — licença, proveniência, status de placeholder, escala — antes de qualquer modelo, textura, áudio ou fonte de terceiros entrar no projeto.",
+      "quando": "Avaliar, baixar ou integrar asset externo; auditar o que já está dentro."
+    },
+    {
+      "nome": "revisor-de-forma",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto de jogo",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Olha prints e vídeos de um modelo 3D e diz, imagem por imagem, o que lê e o que está errado em relação à referência aprovada.",
+      "quando": "ANTES de declarar uma malha pronta — métrica automática não enxerga forma."
+    },
+    {
+      "nome": "diretor-de-identidade-sonora",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto de jogo",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Cuida do som do jogo: briefing e avaliação de compositor, especificação de cues, curadoria de bibliotecas CC0, revisão de mixagem na engine. Não gera áudio — a regra do projeto é zero conteúdo generativo.",
+      "quando": "Qualquer trabalho de áudio."
+    },
+    {
+      "nome": "escriba",
+      "origem": "projeto",
+      "plugin": null,
+      "grupo": "Projeto de jogo",
+      "modelo": null,
+      "uso": "direto",
+      "descricao": "Escreve entrada de devlog e ADR (registro de decisão de arquitetura) no formato do repositório.",
+      "quando": "Fim de sessão de trabalho, ou ao fechar uma decisão que precisa virar ADR."
+    }
+  ]
+}
