@@ -140,8 +140,11 @@ README.md          este índice
 docs/
   index.html       página buscável (GitHub Pages serve daqui)
   skills.json      os dados, uma entrada por skill — fonte única
+  og.png           imagem de prévia (LinkedIn, WhatsApp), gerada
+  CNAME            domínio do GitHub Pages: skills.gustavopires.dev
 scripts/
   embed.py         injeta skills.json dentro de index.html
+  og.py            gera docs/og.png com as contagens do skills.json
 ```
 
 `docs/skills.json` é a fonte da verdade. A página não faz `fetch` do JSON — isso quebraria ao abrir o arquivo local, porque o navegador bloqueia requisição em `file://`. Em vez disso, os dados ficam embutidos no HTML entre dois marcadores, e o `scripts/embed.py` regenera esse trecho.
@@ -152,6 +155,7 @@ Ou seja: **editou o `skills.json`? rode `python scripts/embed.py`** antes de com
 | --- | --- |
 | `python scripts/embed.py --check` | valida o JSON e confere se o HTML está sincronizado |
 | `python scripts/embed.py` | injeta `skills.json` em `docs/index.html` |
+| `python scripts/og.py` | regenera a imagem de prévia `docs/og.png` (precisa de Pillow) |
 | `python -m http.server 8000 --directory docs` | serve a página em http://localhost:8000 |
 
 Não há nada a instalar: só Python 3 com a biblioteca padrão. A publicação é via GitHub Pages (branch `main`, pasta `/docs`).
