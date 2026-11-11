@@ -1,10 +1,11 @@
 {
-  "gerado_em": "2026-10-22",
+  "gerado_em": "2026-11-11",
   "origens": {
     "conta": "Skills da conta Anthropic — ligadas na conta, valem em qualquer sessão (app, web ou terminal)",
     "nativa": "Skills nativas do Claude Code — já vêm com o app, não precisa instalar nada",
     "local": "Skills instaladas na máquina, em ~/.claude/skills/",
-    "marketplace": "Skills do marketplace oficial anthropics/claude-plugins-official — disponíveis para instalar"
+    "marketplace": "Plugins dos marketplaces oficiais da Anthropic (claude-plugins-official e anthropics/skills) — disponíveis para instalar",
+    "comunidade": "Skills e agentes da comunidade, de repositórios públicos no GitHub — leia o SKILL.md antes de instalar"
   },
   "skills": [
     {
@@ -68,7 +69,12 @@
       "comando": null,
       "grupo": "Pesquisa",
       "descricao": "Coordena subagentes de pesquisa e entrega um relatório narrativo com fontes.",
-      "quando": "Comparar opções, revisar literatura, entender um mercado ou uma tendência."
+      "quando": "Comparar opções, revisar literatura, entender um mercado ou uma tendência.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Uma pesquisa com subagentes que volta com relatório e fontes."
     },
     {
       "nome": "built-in-browser",
@@ -122,7 +128,15 @@
       "comando": "/skill-creator",
       "grupo": "Criar skills",
       "descricao": "Cria, edita e mede skills: roda testes de disparo, analisa variância e otimiza a descrição.",
-      "quando": "Escrever a sua própria skill — o caminho mais curto para começar."
+      "quando": "Escrever a sua própria skill — o caminho mais curto para começar.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Escreva a sua primeira skill e meça se ela dispara.",
+      "instalar": [
+        "/skill-creator"
+      ]
     },
     {
       "nome": "reverse-engineer-anything",
@@ -140,7 +154,16 @@
       "comando": "/code-review",
       "grupo": "Código e revisão",
       "descricao": "Revisa o diff atual, um PR, branch ou caminho, procurando bugs de corretude. Níveis low a max; ultra roda revisão multiagente na nuvem.",
-      "quando": "Antes de abrir ou de aprovar um PR."
+      "quando": "Antes de abrir ou de aprovar um PR.",
+      "trilhas": [
+        "alunos",
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Um revisor que acha o bug antes do professor.",
+      "instalar": [
+        "/code-review"
+      ]
     },
     {
       "nome": "simplify",
@@ -167,7 +190,15 @@
       "comando": "/init",
       "grupo": "Código e revisão",
       "descricao": "Gera um CLAUDE.md inicial documentando o repositório.",
-      "quando": "Abrir um projeto no Claude Code pela primeira vez."
+      "quando": "Abrir um projeto no Claude Code pela primeira vez.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "O Claude lê o seu projeto e escreve o manual dele.",
+      "instalar": [
+        "/init"
+      ]
     },
     {
       "nome": "run",
@@ -419,7 +450,15 @@
       "comando": null,
       "grupo": "Qualidade de código",
       "descricao": "Varre o repositório, o diff da branch ou um PR procurando falha de segurança, e gera patches verificados por um painel de agentes.",
-      "quando": "Auditoria de segurança mais fundo que o /security-review nativo."
+      "quando": "Auditoria de segurança mais fundo que o /security-review nativo.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "avancado",
+      "brilho": "Um painel de agentes caça a falha e já traz o patch verificado.",
+      "instalar": [
+        "/plugin install claude-security@claude-plugins-official"
+      ]
     },
     {
       "nome": "claude-automation-recommender",
@@ -428,7 +467,15 @@
       "comando": null,
       "grupo": "Qualidade de código",
       "descricao": "Analisa o código e recomenda que hooks, subagentes, skills, plugins e MCPs valem a pena naquele projeto.",
-      "quando": "Primeiro setup do Claude Code num repositório."
+      "quando": "Primeiro setup do Claude Code num repositório.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Diz quais hooks, skills e MCPs valem a pena neste repositório.",
+      "instalar": [
+        "/plugin install claude-code-setup@claude-plugins-official"
+      ]
     },
     {
       "nome": "claude-md-improver",
@@ -455,7 +502,18 @@
       "comando": null,
       "grupo": "Visual",
       "descricao": "Direção estética para UI nova ou reformada: tipografia, hierarquia visual, escolhas que não parecem template.",
-      "quando": "A interface precisa ter cara própria."
+      "quando": "A interface precisa ter cara própria.",
+      "trilhas": [
+        "alunos",
+        "presenca"
+      ],
+      "nivel": "iniciante",
+      "destaque": true,
+      "brilho": "Da tela genérica para uma interface com cara de produto.",
+      "instalar": [
+        "/plugin install frontend-design@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/frontend-design"
     },
     {
       "nome": "playground",
@@ -618,6 +676,635 @@
       "grupo": "Exemplos",
       "descricao": "Exemplo de skill invocada pelo usuário, demonstrando as opções de frontmatter.",
       "quando": "Ver o formato de uma skill com barra."
+    },
+    {
+      "nome": "learning-output-style",
+      "origem": "marketplace",
+      "plugin": "learning-output-style",
+      "comando": null,
+      "grupo": "Aprender",
+      "descricao": "Modo aula: nos pontos de decisão o Claude para e deixa um TODO(human) para você escrever o trecho que ensina.",
+      "quando": "Está aprendendo e não quer só copiar código pronto.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "O Claude para e pede para você escrever a parte que ensina.",
+      "instalar": [
+        "/plugin install learning-output-style@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/claude-plugins-official",
+      "destaque": true
+    },
+    {
+      "nome": "explanatory-output-style",
+      "origem": "marketplace",
+      "plugin": "explanatory-output-style",
+      "comando": null,
+      "grupo": "Aprender",
+      "descricao": "Junto com o código, o Claude explica as escolhas de implementação e os padrões do projeto.",
+      "quando": "Quer entender o porquê sem desacelerar o trabalho.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Cada decisão vem com o porquê.",
+      "instalar": [
+        "/plugin install explanatory-output-style@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "context7",
+      "origem": "marketplace",
+      "plugin": "context7",
+      "comando": null,
+      "grupo": "Referência",
+      "descricao": "Servidor MCP que injeta a documentação atual, da versão certa, de bibliotecas e frameworks.",
+      "quando": "Vai usar uma biblioteca que mudou depois do treino do modelo (Next, Tailwind, Supabase…).",
+      "trilhas": [
+        "alunos",
+        "arquiteto"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Documentação da versão certa, sem API inventada.",
+      "instalar": [
+        "/plugin install context7@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/upstash/context7"
+    },
+    {
+      "nome": "playwright",
+      "origem": "marketplace",
+      "plugin": "playwright",
+      "comando": null,
+      "grupo": "Navegador e computador",
+      "descricao": "MCP da Microsoft que dá um navegador ao Claude: abre a página, clica, preenche, tira print.",
+      "quando": "Quer que o Claude confira na tela o que acabou de construir.",
+      "trilhas": [
+        "alunos",
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "O Claude abre o navegador e testa o que acabou de fazer.",
+      "instalar": [
+        "/plugin install playwright@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/microsoft/playwright-mcp",
+      "destaque": true
+    },
+    {
+      "nome": "commit-commands",
+      "origem": "marketplace",
+      "plugin": "commit-commands",
+      "comando": null,
+      "grupo": "Código e revisão",
+      "descricao": "Comandos /commit, /commit-push-pr e /clean_gone para o fluxo de git do dia a dia.",
+      "quando": "Ainda tropeça em mensagem de commit e em abrir PR.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "/commit escreve a mensagem; /commit-push-pr abre o PR.",
+      "instalar": [
+        "/plugin install commit-commands@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "superpowers",
+      "origem": "marketplace",
+      "plugin": "superpowers",
+      "comando": null,
+      "grupo": "Método de trabalho",
+      "descricao": "Biblioteca de Jesse Vincent (obra): brainstorming, plano escrito, TDD vermelho-verde, depuração sistemática, revisão e worktrees, com subagentes.",
+      "quando": "O projeto passou de um arquivo e você quer método, não improviso.",
+      "trilhas": [
+        "alunos",
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Brainstorm, plano, TDD e depuração com método de engenheiro sênior.",
+      "instalar": [
+        "/plugin install superpowers@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/obra/superpowers",
+      "destaque": true
+    },
+    {
+      "nome": "feature-dev",
+      "origem": "marketplace",
+      "plugin": "feature-dev",
+      "comando": null,
+      "grupo": "Método de trabalho",
+      "descricao": "Fluxo de feature com agentes: um explora o código, outro desenha a arquitetura, outro revisa a qualidade.",
+      "quando": "Feature grande num código que você ainda não conhece inteiro.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Explora, desenha a arquitetura e revisa antes de você aceitar.",
+      "instalar": [
+        "/plugin install feature-dev@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "pr-review-toolkit",
+      "origem": "marketplace",
+      "plugin": "pr-review-toolkit",
+      "comando": null,
+      "grupo": "Código e revisão",
+      "descricao": "Agentes especialistas em comentários, testes, tratamento de erro, design de tipos, qualidade e simplificação.",
+      "quando": "PR importante, antes do merge.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "avancado",
+      "brilho": "Seis revisores especialistas olhando o mesmo PR.",
+      "instalar": [
+        "/plugin install pr-review-toolkit@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "security-guidance",
+      "origem": "marketplace",
+      "plugin": "security-guidance",
+      "comando": null,
+      "grupo": "Qualidade de código",
+      "descricao": "Avisos por padrão a cada edição, revisão do diff ao parar e um revisor de commit que bloqueia o que é inseguro.",
+      "quando": "O Claude está escrevendo código que toca login, permissão ou entrada de usuário.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Avisa na hora em que o código inseguro é escrito, não depois.",
+      "instalar": [
+        "/plugin install security-guidance@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "chrome-devtools-mcp",
+      "origem": "marketplace",
+      "plugin": "chrome-devtools-mcp",
+      "comando": null,
+      "grupo": "Navegador e computador",
+      "descricao": "Controla um Chrome de verdade: trace de performance, requisições de rede, console com source map.",
+      "quando": "A página está lenta ou quebrando só no navegador.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "avancado",
+      "brilho": "O DevTools do Chrome, operado pelo Claude.",
+      "instalar": [
+        "/plugin install chrome-devtools-mcp@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/ChromeDevTools/chrome-devtools-mcp"
+    },
+    {
+      "nome": "canva",
+      "origem": "marketplace",
+      "plugin": "canva",
+      "comando": null,
+      "grupo": "Visual",
+      "descricao": "MCP oficial do Canva: cria, edita, redimensiona e confere a identidade visual das peças.",
+      "quando": "Post de Instagram, carrossel de LinkedIn ou capa, com a sua marca.",
+      "trilhas": [
+        "presenca"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Peça a arte em português e receba no Canva, já no tamanho.",
+      "instalar": [
+        "/plugin install canva@claude-plugins-official"
+      ],
+      "fonte": "https://github.com/anthropics/claude-plugins-official"
+    },
+    {
+      "nome": "algorithmic-art",
+      "origem": "marketplace",
+      "plugin": "example-skills",
+      "comando": null,
+      "grupo": "Visual",
+      "descricao": "Gera arte generativa em p5.js a partir de uma filosofia escrita, com semente para reproduzir o resultado.",
+      "quando": "Aula introdutória, hackathon, ou quando a turma precisa de um 'uau'.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Arte generativa em p5.js a partir de uma frase.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install example-skills@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/algorithmic-art",
+      "destaque": true
+    },
+    {
+      "nome": "canvas-design",
+      "origem": "marketplace",
+      "plugin": "example-skills",
+      "comando": null,
+      "grupo": "Visual",
+      "descricao": "Cria pôster e peça visual estática em PNG ou PDF, guiada por uma filosofia de design.",
+      "quando": "Cartaz de evento, capa de apresentação, peça para rede social.",
+      "trilhas": [
+        "alunos",
+        "presenca"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Pôster com direção de arte, em PNG ou PDF.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install example-skills@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/canvas-design"
+    },
+    {
+      "nome": "webapp-testing",
+      "origem": "marketplace",
+      "plugin": "example-skills",
+      "comando": null,
+      "grupo": "Código e revisão",
+      "descricao": "O Claude escreve scripts Playwright para operar o app local, capturar tela e ler o log do navegador.",
+      "quando": "Quer prova de que a interface funciona, não só teste de unidade passando.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Teste de interface escrito e rodado pelo próprio Claude.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install example-skills@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/webapp-testing"
+    },
+    {
+      "nome": "doc-coauthoring",
+      "origem": "marketplace",
+      "plugin": "example-skills",
+      "comando": null,
+      "grupo": "Documentos e arquivos",
+      "descricao": "Roteiro de coautoria para spec, PRD e RFC: contexto, rascunho por seção, revisão com leitor simulado.",
+      "quando": "Antes de codar uma feature grande, ou para alinhar com cliente.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Specs, PRDs e RFCs escritos a quatro mãos.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install example-skills@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/doc-coauthoring"
+    },
+    {
+      "nome": "mcp-builder",
+      "origem": "marketplace",
+      "plugin": "example-skills",
+      "comando": null,
+      "grupo": "Criar MCP",
+      "descricao": "Guia para construir servidor MCP em Python ou TypeScript, do desenho das ferramentas à avaliação.",
+      "quando": "Quer ligar um serviço seu (API, banco, casa inteligente) ao Claude.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "avancado",
+      "brilho": "Do serviço externo ao servidor MCP, com avaliação.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install example-skills@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/mcp-builder"
+    },
+    {
+      "nome": "theme-factory",
+      "origem": "marketplace",
+      "plugin": "example-skills",
+      "comando": null,
+      "grupo": "Visual",
+      "descricao": "Aplica um tema coerente de cores e fontes em slides, documentos e páginas; traz 10 temas prontos.",
+      "quando": "Várias peças precisam parecer da mesma marca.",
+      "trilhas": [
+        "presenca"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Dez temas prontos para slide, doc e página.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install example-skills@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/theme-factory"
+    },
+    {
+      "nome": "academy-guide",
+      "origem": "marketplace",
+      "plugin": "academy-guide",
+      "comando": null,
+      "grupo": "Aprender",
+      "descricao": "Quando a pergunta é 'como faço isso no Claude', indica o curso ou tutorial certo da Claude Academy.",
+      "quando": "Turma começando: transforma cada dúvida em material de estudo oficial.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Toda dúvida de 'como faço' vira um curso indicado.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install academy-guide@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/academy-guide"
+    },
+    {
+      "nome": "discernment-nudge",
+      "origem": "marketplace",
+      "plugin": "discernment-nudge",
+      "comando": null,
+      "grupo": "Aprender",
+      "descricao": "Depois de uma resposta em que você vai se basear, o Claude acrescenta 2 ou 3 perguntas para conferir fatos e premissas.",
+      "quando": "Ensinar a turma a não confiar cegamente na IA.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Perguntas para você checar antes de confiar na resposta.",
+      "instalar": [
+        "/plugin marketplace add anthropics/skills",
+        "/plugin install discernment-nudge@anthropic-agent-skills"
+      ],
+      "fonte": "https://github.com/anthropics/skills/tree/main/skills/discernment-nudge"
+    },
+    {
+      "nome": "andrej-karpathy-skills",
+      "origem": "comunidade",
+      "plugin": "andrej-karpathy-skills",
+      "comando": null,
+      "grupo": "Método de trabalho",
+      "descricao": "Um CLAUDE.md com quatro princípios tirados das observações de Andrej Karpathy: pensar antes, simplicidade, mudança cirúrgica, meta verificável.",
+      "quando": "O Claude está complicando demais ou mexendo em arquivo que você não pediu.",
+      "trilhas": [
+        "alunos",
+        "arquiteto"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Quatro regras que impedem o Claude de complicar demais.",
+      "instalar": [
+        "/plugin marketplace add forrestchang/andrej-karpathy-skills",
+        "/plugin install andrej-karpathy-skills@karpathy-skills"
+      ],
+      "fonte": "https://github.com/multica-ai/andrej-karpathy-skills"
+    },
+    {
+      "nome": "remotion",
+      "origem": "comunidade",
+      "plugin": null,
+      "comando": null,
+      "grupo": "Visual",
+      "descricao": "Skills oficiais do Remotion: vídeo programado em React, com animação, legenda, áudio e renderização.",
+      "quando": "Reel, vídeo de demonstração do projeto ou abertura animada.",
+      "trilhas": [
+        "alunos",
+        "presenca"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Vídeo feito com código React, pronto para Reels.",
+      "instalar": [
+        "npx skills add remotion-dev/skills"
+      ],
+      "fonte": "https://github.com/remotion-dev/skills",
+      "destaque": true
+    },
+    {
+      "nome": "frontend-slides",
+      "origem": "comunidade",
+      "plugin": "frontend-slides",
+      "comando": null,
+      "grupo": "Visual",
+      "descricao": "Apresentações HTML com animação, num arquivo só; também converte PowerPoint.",
+      "quando": "Apresentar o projeto final sem o visual padrão de slide.",
+      "trilhas": [
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Apresentação animada no navegador para a entrega do projeto.",
+      "instalar": [
+        "/plugin marketplace add zarazhangrui/frontend-slides",
+        "/plugin install frontend-slides@frontend-slides"
+      ],
+      "fonte": "https://github.com/zarazhangrui/frontend-slides"
+    },
+    {
+      "nome": "voltagent-core-dev",
+      "origem": "comunidade",
+      "plugin": "voltagent-core-dev",
+      "comando": null,
+      "grupo": "Subagentes",
+      "descricao": "Parte da coleção VoltAgent (mais de 100 subagentes em 10 pacotes): especialistas de frontend, backend, API e fullstack. Os pacotes voltagent-qa-sec e voltagent-lang trazem revisor, depurador e especialista por linguagem.",
+      "quando": "Quer entender o que é um subagente vendo vários prontos.",
+      "trilhas": [
+        "alunos",
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Um time de subagentes para delegar trabalho.",
+      "instalar": [
+        "/plugin marketplace add VoltAgent/awesome-claude-code-subagents",
+        "/plugin install voltagent-core-dev@voltagent-subagents"
+      ],
+      "fonte": "https://github.com/VoltAgent/awesome-claude-code-subagents"
+    },
+    {
+      "nome": "wshobson/agents",
+      "origem": "comunidade",
+      "plugin": null,
+      "comando": null,
+      "grupo": "Subagentes",
+      "descricao": "Marketplace com 94 plugins de agentes, skills e comandos por domínio: Python, segurança, infraestrutura, dados.",
+      "quando": "Precisa de um especialista do seu stack; instale só o plugin que casa com ele.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "avancado",
+      "brilho": "94 plugins especialistas; pegue só o do seu stack.",
+      "instalar": [
+        "/plugin marketplace add wshobson/agents",
+        "/plugin install python-development@claude-code-workflows"
+      ],
+      "fonte": "https://github.com/wshobson/agents"
+    },
+    {
+      "nome": "trailofbits",
+      "origem": "comunidade",
+      "plugin": "static-analysis",
+      "comando": null,
+      "grupo": "Qualidade de código",
+      "descricao": "Marketplace de segurança da Trail of Bits: análise estática com CodeQL e Semgrep, revisão diferencial, risco de supply chain, testes por propriedade.",
+      "quando": "Auditoria de verdade antes de produção.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "avancado",
+      "brilho": "Auditoria com CodeQL e Semgrep, do jeito de quem audita para valer.",
+      "instalar": [
+        "/plugin marketplace add trailofbits/skills",
+        "/plugin install static-analysis@trailofbits"
+      ],
+      "fonte": "https://github.com/trailofbits/skills"
+    },
+    {
+      "nome": "react-best-practices",
+      "origem": "comunidade",
+      "plugin": null,
+      "comando": null,
+      "grupo": "Qualidade de código",
+      "descricao": "Skills da Vercel: boas práticas de React e Next.js, diretrizes de interface, composição de componentes e deploy.",
+      "quando": "Projeto Next.js ou React que precisa de revisão de performance e padrão.",
+      "trilhas": [
+        "arquiteto"
+      ],
+      "nivel": "intermediario",
+      "brilho": "As regras de React e Next.js de quem faz o Next.js.",
+      "instalar": [
+        "npx skills add vercel-labs/agent-skills"
+      ],
+      "fonte": "https://github.com/vercel-labs/agent-skills"
+    },
+    {
+      "nome": "marketing-skills",
+      "origem": "comunidade",
+      "plugin": "marketing-skills",
+      "comando": null,
+      "grupo": "Presença digital",
+      "descricao": "Mais de 35 skills de Corey Haines: copywriting, seo-audit, ai-seo, schema-markup, social-content, launch-strategy e CRO de página.",
+      "quando": "Página nova, lançamento ou revisão de copy do site.",
+      "trilhas": [
+        "presenca"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Copy, SEO, GEO e lançamento: um time de marketing em forma de skill.",
+      "instalar": [
+        "/plugin marketplace add coreyhaines31/marketingskills",
+        "/plugin install marketing-skills@marketingskills"
+      ],
+      "fonte": "https://github.com/coreyhaines31/marketingskills",
+      "destaque": true
+    },
+    {
+      "nome": "claude-seo",
+      "origem": "comunidade",
+      "plugin": "claude-seo",
+      "comando": null,
+      "grupo": "Presença digital",
+      "descricao": "Auditoria de SEO completa (26 skills, 19 agentes): técnico, E-E-A-T, Core Web Vitals, schema, links internos, com plano por prioridade.",
+      "quando": "Quer saber o que está segurando o site no Google.",
+      "trilhas": [
+        "presenca"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Auditoria de SEO em 15 minutos, com plano priorizado.",
+      "instalar": [
+        "/plugin marketplace add AgriciDaniel/claude-seo",
+        "/plugin install claude-seo@agricidaniel-claude-seo"
+      ],
+      "fonte": "https://github.com/AgriciDaniel/claude-seo"
+    },
+    {
+      "nome": "geo-seo-claude",
+      "origem": "comunidade",
+      "plugin": null,
+      "comando": null,
+      "grupo": "Presença digital",
+      "descricao": "Mede se o site é citável por buscadores de IA (ChatGPT, Perplexity, Gemini), gera llms.txt, schema e relatório em PDF.",
+      "quando": "Ser encontrado quando alguém pergunta a uma IA, não só ao Google.",
+      "trilhas": [
+        "presenca"
+      ],
+      "nivel": "intermediario",
+      "brilho": "Seu site citado pelas IAs, não só listado no Google.",
+      "instalar": [
+        "git clone https://github.com/zubair-trabzada/geo-seo-claude.git"
+      ],
+      "fonte": "https://github.com/zubair-trabzada/geo-seo-claude"
+    },
+    {
+      "nome": "social-media-skills",
+      "origem": "comunidade",
+      "plugin": "social-media-skills",
+      "comando": null,
+      "grupo": "Presença digital",
+      "descricao": "17 skills de Charlie Hills: primeiro aprende a sua voz (voice-builder), depois escreve post de LinkedIn, roteiro de Reel e newsletter nessa voz.",
+      "quando": "LinkedIn e Instagram precisam soar como você, toda semana.",
+      "trilhas": [
+        "presenca"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Aprende a sua voz e escreve LinkedIn, Reels e newsletter.",
+      "instalar": [
+        "/plugin marketplace add charlie947/social-media-skills",
+        "/plugin install social-media-skills@social-media-skills"
+      ],
+      "fonte": "https://github.com/charlie947/social-media-skills",
+      "destaque": true
+    },
+    {
+      "nome": "web-asset-generator",
+      "origem": "comunidade",
+      "plugin": "web-asset-generator",
+      "comando": null,
+      "grupo": "Presença digital",
+      "descricao": "Gera favicon, ícones de app e imagem de prévia social (Open Graph) a partir de uma imagem ou texto.",
+      "quando": "Site novo sem prévia no WhatsApp e no LinkedIn.",
+      "trilhas": [
+        "presenca",
+        "alunos"
+      ],
+      "nivel": "iniciante",
+      "brilho": "Favicon, ícone e prévia social de uma vez.",
+      "instalar": [
+        "/plugin marketplace add alonw0/web-asset-generator",
+        "/plugin install web-asset-generator@web-asset-generator-marketplace"
+      ],
+      "fonte": "https://github.com/alonw0/web-asset-generator"
     }
-  ]
+  ],
+  "trilhas": {
+    "alunos": {
+      "titulo": "Comece por aqui",
+      "subtitulo": "Para quem está no primeiro ou segundo projeto",
+      "texto": "Em ordem: primeiro o Claude explica, depois você constrói com método, e no fim mostra o trabalho com cara de produto.",
+      "ordem": [
+        "init",
+        "learning-output-style",
+        "explanatory-output-style",
+        "academy-guide",
+        "discernment-nudge",
+        "andrej-karpathy-skills",
+        "context7",
+        "frontend-design",
+        "algorithmic-art",
+        "canvas-design",
+        "commit-commands",
+        "code-review",
+        "playwright",
+        "webapp-testing",
+        "superpowers",
+        "skill-creator",
+        "voltagent-core-dev",
+        "frontend-slides",
+        "remotion",
+        "web-asset-generator"
+      ]
+    },
+    "arquiteto": {
+      "titulo": "Arquitetura e produto",
+      "subtitulo": "Para quem já entrega e quer escala",
+      "texto": "Método, revisão em camadas, segurança e integração. O que separa protótipo de sistema."
+    },
+    "presenca": {
+      "titulo": "Presença digital",
+      "subtitulo": "Site, LinkedIn e Instagram no mesmo tom",
+      "texto": "SEO para o Google, GEO para as IAs, a sua voz nos posts e a arte no tamanho certo."
+    }
+  }
 }

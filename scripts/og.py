@@ -9,7 +9,6 @@ Uso:
 """
 
 import json
-from collections import Counter
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
@@ -19,12 +18,14 @@ JSON_PATH = RAIZ / "docs" / "skills.json"
 SAIDA = RAIZ / "docs" / "og.png"
 FONTES = Path("/usr/share/fonts/truetype/dejavu")
 
-BG = "#fbfaf9"
-TEXTO = "#1d1b19"
-DIM = "#5f5a54"
-ACCENT = "#b1511c"
-BORDA = "#e2ded8"
-CORES = {"conta": "#2d6a4f", "nativa": "#1f5a8f", "local": "#7b3f9d", "marketplace": "#8a6513"}
+BG = "#050505"
+PONTO = "#1a1a1a"
+TEXTO = "#ededec"
+DIM = "#a3a3a0"
+BORDA = "#2a2a2a"
+SUPERFICIE = "#0d0d0d"
+# Uma cor por trilha, na mesma ordem da pagina.
+TRILHAS = (("alunos", "#22c55e"), ("arquiteto", "#00d9ff"), ("presenca", "#f472b6"))
 
 
 def fonte(nome, tamanho):
@@ -32,34 +33,39 @@ def fonte(nome, tamanho):
 
 
 def main():
-    skills = json.loads(JSON_PATH.read_text(encoding="utf-8"))["skills"]
-    por_origem = Counter(s["origem"] for s in skills)
-    ativas = len(skills) - por_origem["marketplace"]
+    dados = json.loads(JSON_PATH.read_text(encoding="utf-8"))
+    skills = dados["skills"]
+    curadas = sum(1 for s in skills if s.get("trilhas"))
 
     img = Image.new("RGB", (1200, 630), BG)
     d = ImageDraw.Draw(img)
-    d.rectangle([0, 0, 1200, 10], fill=ACCENT)
 
-    d.text((80, 90), "CLAUDE CODE", font=fonte("DejaVuSansMono-Bold.ttf", 28), fill=ACCENT)
-    d.text((80, 140), "Índice de Skills", font=fonte("DejaVuSerif-Bold.ttf", 92), fill=TEXTO)
-    corpo = fonte("DejaVuSans.ttf", 34)
-    d.text((80, 270), "O que cada skill faz e quando ela entra em ação,", font=corpo, fill=DIM)
-    d.text((80, 318), "num catálogo com busca.", font=corpo, fill=DIM)
+    # Grade de pontos, como no topo da pagina.
+    for y in range(11, 630, 22):
+        for x in range(11, 1200, 22):
+            d.point((x, y), fill=PONTO)
 
-    # Barra proporcional por origem.
-    x, y, largura = 80, 420, 1040
-    for origem in ("conta", "nativa", "local", "marketplace"):
-        n = por_origem.get(origem, 0)
-        if not n:
-            continue
-        w = round(largura * n / len(skills))
-        d.rectangle([x, y, x + w - 4, y + 22], fill=CORES[origem])
-        x += w
+    d.text((80, 70), "CLAUDE CODE · CURADORIA", font=fonte("DejaVuSansMono.ttf", 24), fill="#f472b6")
+    titulo = fonte("DejaVuSans-Bold.ttf", 76)
+    d.text((80, 112), "Superpoderes para", font=titulo, fill=TEXTO)
+    d.text((80, 200), "o seu Claude Code.", font=titulo, fill=TEXTO)
+    corpo = fonte("DejaVuSans.ttf", 30)
+    d.text((80, 310), f"{curadas} skills e agentes escolhidos a dedo, com o", font=corpo, fill=DIM)
+    d.text((80, 352), "comando para instalar e a hora certa de usar.", font=corpo, fill=DIM)
 
-    mono = fonte("DejaVuSansMono.ttf", 28)
-    d.text((80, 470), f"{ativas} ativas  ·  {por_origem['marketplace']} no marketplace", font=mono, fill=TEXTO)
-    d.line([80, 540, 1120, 540], fill=BORDA, width=2)
-    d.text((80, 558), "skills.gustavopires.dev", font=mono, fill=ACCENT)
+    # As tres trilhas como cartoes.
+    mono = fonte("DejaVuSansMono-Bold.ttf", 22)
+    x = 80
+    for tid, cor in TRILHAS:
+        t = dados["trilhas"][tid]
+        n = sum(1 for s in skills if tid in s.get("trilhas", []))
+        d.rounded_rectangle([x, 430, x + 330, 530], radius=14, fill=SUPERFICIE, outline=cor, width=2)
+        d.text((x + 20, 446), f"{n} ITENS", font=mono, fill=cor)
+        d.text((x + 20, 480), t["titulo"], font=fonte("DejaVuSans-Bold.ttf", 23), fill=TEXTO)
+        x += 355
+
+    d.line([80, 565, 1120, 565], fill=BORDA, width=2)
+    d.text((80, 578), "skills.gustavopires.dev", font=fonte("DejaVuSansMono.ttf", 24), fill="#22c55e")
 
     img.save(SAIDA, optimize=True)
     print(f"gerado {SAIDA.relative_to(RAIZ)}")

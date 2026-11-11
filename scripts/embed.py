@@ -24,12 +24,14 @@ INICIO = "<!-- DADOS:INICIO -->"
 FIM = "<!-- DADOS:FIM -->"
 
 CAMPOS = ("nome", "origem", "plugin", "comando", "grupo", "descricao", "quando")
-ORIGENS_VALIDAS = {"conta", "nativa", "local", "marketplace"}
+ORIGENS_VALIDAS = {"conta", "nativa", "local", "marketplace", "comunidade"}
+NIVEIS_VALIDOS = {"iniciante", "intermediario", "avancado"}
 
 
-def carregar_skills():
-    """Le e valida o JSON, devolvendo a lista de skills."""
+def carregar_dados():
+    """Le e valida o JSON, devolvendo skills e trilhas."""
     dados = json.loads(JSON_PATH.read_text(encoding="utf-8"))
+    trilhas = dados.get("trilhas") or {}
     skills = dados.get("skills")
     if not isinstance(skills, list) or not skills:
         raise ValueError("skills.json: a chave 'skills' deve ser uma lista nao vazia")
@@ -44,12 +46,26 @@ def carregar_skills():
             raise ValueError(
                 f"skills.json: entrada {i} ({s['nome']}) tem origem invalida {s['origem']!r}"
             )
-    return skills
+        # Campos da curadoria: opcionais, mas validados quando aparecem.
+        for t in s.get("trilhas", []):
+            if t not in trilhas:
+                raise ValueError(f"skills.json: {s['nome']} cita a trilha {t!r}, que nao existe")
+        if "nivel" in s and s["nivel"] not in NIVEIS_VALIDOS:
+            raise ValueError(f"skills.json: {s['nome']} tem nivel invalido {s['nivel']!r}")
+        if s.get("trilhas") and not s.get("brilho"):
+            raise ValueError(f"skills.json: {s['nome']} esta numa trilha mas nao tem 'brilho'")
+        if "instalar" in s and not (
+            isinstance(s["instalar"], list) and all(isinstance(c, str) and c for c in s["instalar"])
+        ):
+            raise ValueError(f"skills.json: {s['nome']}: 'instalar' deve ser lista de comandos")
+        if s.get("fonte") and not s["fonte"].startswith("https://"):
+            raise ValueError(f"skills.json: {s['nome']}: 'fonte' deve ser https")
+    return skills, trilhas
 
 
-def montar_bloco(skills):
+def montar_bloco(skills, trilhas):
     """Monta o trecho de HTML que vai entre os marcadores."""
-    payload = json.dumps({"skills": skills}, ensure_ascii=False, separators=(",", ":"))
+    payload = json.dumps({"skills": skills, "trilhas": trilhas}, ensure_ascii=False, separators=(",", ":"))
     # Um "</" literal encerraria o <script> antes da hora.
     payload = payload.replace("</", "<\\/")
     return (
@@ -67,7 +83,7 @@ def main():
     )
     args = ap.parse_args()
 
-    skills = carregar_skills()
+    skills, trilhas = carregar_dados()
     html = HTML_PATH.read_text(encoding="utf-8")
 
     de = html.find(INICIO)
@@ -76,7 +92,7 @@ def main():
         print(f"erro: marcadores {INICIO} / {FIM} nao encontrados em {HTML_PATH.name}")
         return 1
 
-    novo = html[:de] + montar_bloco(skills) + html[ate + len(FIM):]
+    novo = html[:de] + montar_bloco(skills, trilhas) + html[ate + len(FIM):]
 
     if novo == html:
         print(f"ok: {HTML_PATH.name} sincronizado ({len(skills)} skills)")
